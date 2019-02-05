@@ -14,7 +14,7 @@ import Header from "components/Header/Header.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 
-import dashboardRoutes from "routes/dashboard.jsx";
+import profileRoutes from "routes/profile.jsx";
 
 import appStyle from "assets/jss/material-dashboard-pro-react/layouts/dashboardStyle.jsx";
 
@@ -23,7 +23,7 @@ import logo from "assets/img/logo-white.svg";
 
 const switchRoutes = (
   <Switch>
-    {dashboardRoutes.map((prop, key) => {
+    {profileRoutes.map((prop, key) => {
       if (prop.redirect)
         return <Redirect from={prop.path} to={prop.pathTo} key={key} />;
       if (prop.collapse)
@@ -39,7 +39,7 @@ const switchRoutes = (
 
 var ps;
 
-class Dashboard extends React.Component {
+class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -75,6 +75,7 @@ class Dashboard extends React.Component {
   }
   //#endregion
   
+  //#region METHODS
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
   };
@@ -89,6 +90,8 @@ class Dashboard extends React.Component {
       this.setState({ mobileOpen: false });
     }
   }
+  //#endregion
+  
   render() {
     const { classes, ...rest } = this.props;
     const mainPanel =
@@ -102,7 +105,7 @@ class Dashboard extends React.Component {
     return (
       <div className={classes.wrapper}>
         <Sidebar
-          routes={dashboardRoutes}
+          routes={profileRoutes}
           logoText={"Creative Tim"}
           logo={logo}
           image={image}
@@ -117,7 +120,7 @@ class Dashboard extends React.Component {
           <Header
             sidebarMinimize={this.sidebarMinimize.bind(this)}
             miniActive={this.state.miniActive}
-            routes={dashboardRoutes}
+            routes={profileRoutes}
             handleDrawerToggle={this.handleDrawerToggle}
             {...rest}
           />
@@ -136,8 +139,8 @@ class Dashboard extends React.Component {
   }
 }
 
-Dashboard.propTypes = {
+Profile.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(appStyle)(Dashboard);
+export default withStyles(appStyle)(Profile);
