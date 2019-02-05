@@ -1,4 +1,4 @@
-import Dashboard from "views/Dashboard/Dashboard.jsx";
+import Profile from "views/Profile/ViewProfile.jsx";
 import Buttons from "views/Components/Buttons.jsx";
 import GridSystem from "views/Components/GridSystem.jsx";
 import Panels from "views/Components/Panels.jsx";
@@ -62,7 +62,7 @@ var profileRoutes = [
     path: "/profile",
     name: "Profile",
     icon: DashboardIcon,
-    component: Dashboard
+    component: Profile
   },
   {
     collapse: true,
