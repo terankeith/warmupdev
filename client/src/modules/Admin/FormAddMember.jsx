@@ -1,5 +1,6 @@
 import React, {Component} from "react";
-// @material-ui/core components
+import PropTypes from "prop-types";
+//COMPONENTS MATERIAL UI
 import withStyles from "@material-ui/core/styles/withStyles";
 import FormLabel from "@material-ui/core/FormLabel";
 import Select from "@material-ui/core/Select";
@@ -7,10 +8,10 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 
-// @material-ui/icons
+//ICONS
 import Contacts from "@material-ui/icons/Contacts";
 
-// core components
+//COMPONENTS
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
@@ -19,6 +20,10 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
+
+//REDUX
+import {connect} from "react-redux";
+import {saveMember} from "actions/memberAction.js";
 
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 
@@ -46,29 +51,30 @@ class FormAddMember extends Component{
               grade: this.state.ddlGrade
           }
 
-          console.log(newMember);
-
-          this.resetForm();
+          this.props.saveMember(newMember);
       }
+    //#endregion
 
-      resetForm(){
-          this.setState({
-              txtFirstName: "",
-              txtLastName: "",
-              ddlGrade: ""
-          })
-      }
+    //#region HELPERS
+    resetForm(){
+        this.setState({
+            txtFirstName: "",
+            txtLastName: "",
+            ddlGrade: ""
+        })
+    }
     //#endregion
     
     render(){
         const { classes } = this.props;
+        const { member } = this.props.memberAdded;
         return <div>
             <Card>
                 <CardHeader color="rose" icon>
                     <CardIcon color="rose">
                         <Contacts />
                     </CardIcon>
-                    <h4 className={classes.cardIconTitle}>Add Member</h4>
+                    <h4 className={classes.cardIconTitle}>{member.firstName ? member.firstName: "Add a Member" }</h4>
                 </CardHeader>
                 <CardBody>
                     <form onSubmit={this.onSubmit}>
@@ -184,4 +190,13 @@ class FormAddMember extends Component{
     }
 }
 
-export default withStyles(regularFormsStyle)(FormAddMember);
+FormAddMember.propTypes = {
+    saveMember: PropTypes.func.isRequired,
+    memberAdded: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+    memberAdded: state.memberAdded
+})
+
+export default connect(mapStateToProps, {saveMember})(withStyles(regularFormsStyle)(FormAddMember));
