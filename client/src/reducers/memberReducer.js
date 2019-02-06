@@ -1,11 +1,17 @@
-import { GET_ERRORS } from "../actions/types";
+import { GET_ERRORS, GET_MEMBERS } from "../actions/types";
 
-const initialState = {};
+const initialState = {
+  member: {},
+  members: []
+};
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case GET_ERRORS:
-      return action.payload;
+    case GET_MEMBERS:
+      return {
+        ...state,
+        members: action.payload
+      };
     default:
       return state;
   }

@@ -27,5 +27,16 @@ router.post("/add", (req, res) => {
     .then(member => res.json(member))
     .catch(err => console.log(err));
 });
+//#endregion
+
+//#region GET api/members
+//@desc Gets all members
+//@access PUBLIC
+router.get("/", (req, res) => {
+  Member.find().then(members => {
+    res.json(members);
+  });
+});
+//#endregion
 
 module.exports = router;

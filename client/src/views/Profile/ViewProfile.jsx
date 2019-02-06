@@ -12,6 +12,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import FormAddMember from "modules/Admin/FormAddMember.jsx";
+import TableMembers from "modules/Member/TableMembers.jsx";
 
 
 import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashboardStyle";
@@ -24,6 +25,9 @@ class ViewProfile extends Component {
         <GridContainer>
             <GridItem xs={12} sm={12} md={6}>
                 <FormAddMember/>
+            </GridItem>
+            <GridItem xs={12} sm={12} md={6}>
+                <TableMembers/>
             </GridItem>
         </GridContainer>
       </div>

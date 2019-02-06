@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+import {withRouter} from "react-router-dom";
 
 //COMPONENTS MATERIAL UI
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -40,6 +41,14 @@ class FormAddMember extends Component{
         };
     }
 
+    //#region LIFECYCLE
+    componentWillReceiveProps(nextProps){
+        if (nextProps.errors){
+            this.setState({errors: nextProps.errors});
+        }
+    }
+    //#endregion
+
     //#region EVENTS
     onChange = e => {
         this.setState({ [e.target.name]: e.target.value });
@@ -54,7 +63,9 @@ class FormAddMember extends Component{
               grade: this.state.ddlGrade
           }
 
-          this.props.saveMember(newMember);
+          //allowing user to redirect from within memberAction
+          //this method takes me to the memberAction
+          this.props.saveMember(newMember, this.props.history);
       }
     //#endregion
 
@@ -71,14 +82,13 @@ class FormAddMember extends Component{
     render(){
         const { classes } = this.props;
         const { errors } = this.state;
-        const { member } = this.props.memberAdded;
         return <div>
             <Card>
                 <CardHeader color="rose" icon>
                     <CardIcon color="rose">
                         <Contacts />
                     </CardIcon>
-                    <h4 className={classes.cardIconTitle}>{member.firstName ? member.firstName: "Add a Member" }</h4>
+                    <h4 className={classes.cardIconTitle}>Add A Member</h4>
                 </CardHeader>
                 <CardBody>
                     <form onSubmit={this.onSubmit}>
@@ -200,7 +210,8 @@ class FormAddMember extends Component{
 
 FormAddMember.propTypes = {
     saveMember: PropTypes.func.isRequired,
-    memberAdded: PropTypes.object.isRequired
+    member: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
@@ -208,4 +219,4 @@ const mapStateToProps = (state) => ({
     errors: state.errors
 })
 
-export default connect(mapStateToProps, {saveMember})(withStyles(regularFormsStyle)(FormAddMember));
+export default connect(mapStateToProps, {saveMember})(withStyles(regularFormsStyle)(withRouter(FormAddMember)));

@@ -23,7 +23,7 @@
 // import TimelinePage from "views/Pages/Timeline.jsx";
 // import RTLSupport from "views/Pages/RTLSupport.jsx";
 
-import pagesRoutes from "./pages.jsx";
+//import pagesRoutes from "./pages.jsx";
 
 // @material-ui/icons
 // import DashboardIcon from "@material-ui/icons/Dashboard";
@@ -36,7 +36,7 @@ import pagesRoutes from "./pages.jsx";
 // import Timeline from "@material-ui/icons/Timeline";
 // import DateRange from "@material-ui/icons/DateRange";
 
-var pages = [
+//var pages = [
   // {
   //   path: "/timeline-page",
   //   name: "Timeline Page",
@@ -55,7 +55,7 @@ var pages = [
   //   mini: "RS",
   //   component: RTLSupport
   // }
-].concat(pagesRoutes);
+//].concat(pagesRoutes);
 
 var dashRoutes = [
   // {
