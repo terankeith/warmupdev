@@ -1,5 +1,7 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
+
 //COMPONENTS MATERIAL UI
 import withStyles from "@material-ui/core/styles/withStyles";
 import FormLabel from "@material-ui/core/FormLabel";
@@ -22,7 +24,7 @@ import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 
 //REDUX
-import {connect} from "react-redux";
+
 import {saveMember} from "actions/memberAction.js";
 
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
@@ -33,7 +35,8 @@ class FormAddMember extends Component{
         this.state = {
             txtFirstName: "",
             txtLastName: "",
-            ddlGrade: ""
+            ddlGrade: "",
+            errors: {}
         };
     }
 
@@ -67,6 +70,7 @@ class FormAddMember extends Component{
     
     render(){
         const { classes } = this.props;
+        const { errors } = this.state;
         const { member } = this.props.memberAdded;
         return <div>
             <Card>
@@ -80,13 +84,15 @@ class FormAddMember extends Component{
                     <form onSubmit={this.onSubmit}>
                         <GridContainer>
                             <GridItem xs={12} sm={12} md={3}>
-                                <FormLabel className={classes.labelHorizontal}>
+                                <FormLabel className={classes.labelHorizontal}
+                                error={errors.firstName ? true : false}>
                                 First Name
                                 </FormLabel>
                             </GridItem>
                             <GridItem xs={12} sm={12} md={8}>
                                 <CustomInput
                                 id="txtFirstName"
+                                error={errors.firstName ? true : false}
                                 formControlProps={{
                                     fullWidth: true
                                 }}
@@ -101,13 +107,15 @@ class FormAddMember extends Component{
                         </GridContainer>
                         <GridContainer>
                             <GridItem xs={12} sm={12} md={3}>
-                                <FormLabel className={classes.labelHorizontal}>
+                                <FormLabel className={classes.labelHorizontal}
+                                error={errors.lastName ? true : false}>
                                 Last Name
                                 </FormLabel>
                             </GridItem>
                             <GridItem xs={12} sm={12} md={8}>
                                 <CustomInput
                                 id="txtLastName"
+                                error={errors.lastName ? true : false}
                                 formControlProps={{
                                     fullWidth: true
                                 }}
@@ -196,7 +204,8 @@ FormAddMember.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-    memberAdded: state.memberAdded
+    member: state.member,
+    errors: state.errors
 })
 
 export default connect(mapStateToProps, {saveMember})(withStyles(regularFormsStyle)(FormAddMember));
