@@ -1,4 +1,9 @@
-import { GET_ERRORS, GET_MEMBERS, ADD_MEMBER } from "../actions/actions";
+import {
+  GET_ERRORS,
+  GET_MEMBERS,
+  ADD_MEMBER,
+  DELETE_MEMBER
+} from "../actions/actions";
 
 const initialState = {
   members: [],
@@ -16,6 +21,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         members: action.payload
+      };
+    case DELETE_MEMBER:
+      return {
+        ...state,
+        members: state.members.filter(member => member._id !== action.payload)
       };
     default:
       return state;

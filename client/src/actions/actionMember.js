@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_ERRORS, GET_MEMBERS, ADD_MEMBER } from "./actions";
+import { GET_ERRORS, GET_MEMBERS, ADD_MEMBER, DELETE_MEMBER } from "./actions";
 //an action is a method that interacts with the db
 
 export const saveMember = (memberData, history) => dispatch => {
@@ -32,6 +32,23 @@ export const getMembers = () => dispatch => {
       dispatch({
         type: GET_ERRORS,
         payload: null
+      })
+    );
+};
+
+export const deleteMember = id => dispatch => {
+  axios
+    .delete(`/api/members/${id}`)
+    .then(res =>
+      dispatch({
+        type: DELETE_MEMBER,
+        payload: id
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
       })
     );
 };

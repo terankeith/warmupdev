@@ -39,4 +39,20 @@ router.get("/", (req, res) => {
 });
 //#endregion
 
+//#region DELETE api/members/:id
+//@desc Delete Member
+//@access PUBLIC
+router.delete("/:id", (req, res) => {
+  Member.findById(req.params.id).then(member => {
+    //delete
+    member
+      .remove()
+      .then(() => res.json({ success: true }))
+      .catch(err =>
+        res.status(404).json({ membernotfound: "No member found" })
+      );
+  });
+});
+//#endregion
+
 module.exports = router;
