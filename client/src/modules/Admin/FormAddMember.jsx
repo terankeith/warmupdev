@@ -26,7 +26,7 @@ import CardBody from "components/Card/CardBody.jsx";
 
 //REDUX
 
-import {saveMember} from "actions/memberAction.js";
+import {saveMember} from "actions/actionMember.js";
 
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 
@@ -88,7 +88,7 @@ class FormAddMember extends Component{
                     <CardIcon color="rose">
                         <Contacts />
                     </CardIcon>
-                    <h4 className={classes.cardIconTitle}>Add A Member</h4>
+                    <h4 className={classes.cardIconTitle}><strong>Add A Member</strong></h4>
                 </CardHeader>
                 <CardBody>
                     <form onSubmit={this.onSubmit}>
@@ -210,12 +210,12 @@ class FormAddMember extends Component{
 
 FormAddMember.propTypes = {
     saveMember: PropTypes.func.isRequired,
-    member: PropTypes.object.isRequired,
+    model: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
-    member: state.member,
+    model: state.member,
     errors: state.errors
 })
 

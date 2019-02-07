@@ -22,7 +22,7 @@ import CardIcon from "components/Card/CardIcon.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 
 //ACTIONS
-import {getMembers} from "actions/memberAction.js";
+import {getMembers} from "actions/actionMember.js";
 
 import extendedTablesStyle from "assets/jss/material-dashboard-pro-react/views/extendedTablesStyle.jsx";
 
@@ -30,8 +30,7 @@ class TableMembers extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      checked: [],
-      member: {},
+      checked: []
     };
     this.handleToggle = this.handleToggle.bind(this);
   }
@@ -40,13 +39,6 @@ class TableMembers extends Component {
   componentDidMount(){
     this.props.getMembers();
   }
-
-  // componentWillReceiveProps(nextProps){
-  //   if (nextProps.members){
-  //     this.setState({members: nextProps.members});
-  //   }
-  // }
-  //#endregion
 
   //#region EVENTS
   handleToggle(value) {
@@ -69,7 +61,7 @@ class TableMembers extends Component {
   
   render() {
     const { classes } = this.props;
-    const { members } = this.props.member;
+    const { members } = this.props.model;
 
     const fillButtons = [
       { color: "info", icon: Person },
@@ -90,7 +82,7 @@ class TableMembers extends Component {
               <CardIcon color="rose">
                 <Assignment />
               </CardIcon>
-              <h4 className={classes.cardIconTitle}>River Valley 2019</h4>
+              <h4 className={classes.cardIconTitle}><strong>River Valley 2019</strong></h4>
             </CardHeader>
             <CardBody>
               <Table
@@ -99,17 +91,13 @@ class TableMembers extends Component {
                   "Grade",
                   "Actions"
                 ]}
-                tableData={[
-                  members.map(member => {
+                tableData={
+                  members.map(member =>{
                     return (
-                      [
-                        member.firstName + " " + member.lastName,
-                        member.grade,
-                        fillButtons
-                      ]
-                    )
+                      [member.firstName + " " + member.lastName, member.grade, fillButtons]
+                    );
                   })
-                ]}
+                }
                 customCellClasses={[
                   classes.center,
                   classes.right,
@@ -133,11 +121,11 @@ class TableMembers extends Component {
 
 TableMembers.propTypes = {
   getMembers: PropTypes.func.isRequired,
-  member: PropTypes.object.isRequired
+  model: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
-  member: state.member
+  model: state.member
 })
 
 export default connect(mapStateToProps, {getMembers})(withStyles(extendedTablesStyle)(TableMembers));
