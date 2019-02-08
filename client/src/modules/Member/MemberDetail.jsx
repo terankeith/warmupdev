@@ -31,13 +31,13 @@ import CardBody from "components/Card/CardBody.jsx";
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 //#endregion
 
-class FormAddMember extends Component{
-    constructor(){
-        super();
+class MemberDetail extends Component{
+    constructor(props){
+        super(props);
         this.state = {
-            txtFirstName: "",
-            txtLastName: "",
-            ddlGrade: "",
+            firstName: "",
+            lastName: "",
+            grade: "",
             errors: {}
         };
     }
@@ -46,6 +46,16 @@ class FormAddMember extends Component{
     componentWillReceiveProps(nextProps){
         if (nextProps.errors){
             this.setState({errors: nextProps.errors});
+        }
+
+        if (nextProps.model.member){
+            const editMember = nextProps.model.member;
+
+            this.setState({
+                firstName: editMember.firstName, 
+                lastName: editMember.lastName,
+                grade: editMember.grade
+            })
         }
     }
     //#endregion
@@ -57,27 +67,28 @@ class FormAddMember extends Component{
 
       onSubmit = e => {
           e.preventDefault();
+        
+          const { member } = this.props.model;
 
-          const newMember = {
-              firstName: this.state.txtFirstName,
-              lastName: this.state.txtLastName,
-              grade: this.state.ddlGrade
-          }
+          member.firstName = this.state.firstName;
+          member.lastName = this.state.lastName;
+          member.grade = this.state.grade;
+          var isNew = member._id ? false : true;
 
           //allowing user to redirect from within memberAction
           //this method takes me to the memberAction
-          this.props.saveMember(newMember, this.props.history);
+          this.props.saveMember(member, this.props.history, isNew);
 
-          this.resetForm();
+          //this.resetForm();
       }
     //#endregion
 
     //#region HELPERS
     resetForm(){
         this.setState({
-            txtFirstName: "",
-            txtLastName: "",
-            ddlGrade: ""
+            firstName: "",
+            lastName: "",
+            grade: ""
         })
     }
     //#endregion
@@ -105,16 +116,16 @@ class FormAddMember extends Component{
                             </GridItem>
                             <GridItem xs={12} sm={12} md={8}>
                                 <CustomInput
-                                id="txtFirstName"
+                                id="firstName"
                                 error={errors.firstName ? true : false}
                                 formControlProps={{
                                     fullWidth: true
                                 }}
                                 inputProps={{
                                     type: "text",
-                                    value: this.state.txtFirstName,
+                                    value: this.state.firstName,
                                     onChange: this.onChange,
-                                    name: "txtFirstName"
+                                    name: "firstName"
                                 }}
                                 />
                             </GridItem>
@@ -128,16 +139,16 @@ class FormAddMember extends Component{
                             </GridItem>
                             <GridItem xs={12} sm={12} md={8}>
                                 <CustomInput
-                                id="txtLastName"
+                                id="lastName"
                                 error={errors.lastName ? true : false}
                                 formControlProps={{
                                     fullWidth: true
                                 }}
                                 inputProps={{
                                     type: "text",
-                                    value: this.state.txtLastName,
+                                    value: this.state.lastName,
                                     onChange: this.onChange,
-                                    name: "txtLastName"
+                                    name: "lastName"
                                 }}
                                 />
                             </GridItem>
@@ -150,7 +161,7 @@ class FormAddMember extends Component{
                             </GridItem>
                             <GridItem xs={12} sm={4} md={4} lg={8}>
                                 <FormControl fullWidth className={classes.selectFormControl}>
-                                    <InputLabel htmlFor="simple-select" className={classes.selectLabel}>
+                                    <InputLabel htmlFor="grade" className={classes.selectLabel}>
                                         Grade
                                     </InputLabel>
                                     <Select MenuProps={{
@@ -159,9 +170,9 @@ class FormAddMember extends Component{
                                         classes={{
                                                     select: classes.select
                                                 }}
-                                        value={this.state.ddlGrade} onChange={this.onChange} inputProps={{
-                                                    name: "ddlGrade", //should equal the state value???
-                                                    id: "simple-select"
+                                        value={this.state.grade} onChange={this.onChange} inputProps={{
+                                                    name: "grade", 
+                                                    id: "grade"
                                                 }}>
                                         <MenuItem disabled classes={{
                                                     root: classes.selectMenuItem
@@ -212,15 +223,15 @@ class FormAddMember extends Component{
     }
 }
 
-FormAddMember.propTypes = {
+MemberDetail.propTypes = {
     saveMember: PropTypes.func.isRequired,
     model: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
-    model: state.member,
+    model: state.modelMember,
     errors: state.errors
 })
 
-export default connect(mapStateToProps, {saveMember})(withStyles(regularFormsStyle)(withRouter(FormAddMember)));
+export default connect(mapStateToProps, {saveMember})(withStyles(regularFormsStyle)(withRouter(MemberDetail)));

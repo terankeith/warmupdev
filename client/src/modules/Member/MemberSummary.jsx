@@ -28,7 +28,7 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import extendedTablesStyle from "assets/jss/material-dashboard-pro-react/views/extendedTablesStyle.jsx";
 //#endregion
 
-class TableMembers extends Component {
+class MemberSummary extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -151,7 +151,7 @@ class TableMembers extends Component {
   }
 }
 
-TableMembers.propTypes = {
+MemberSummary.propTypes = {
   getMember: PropTypes.func.isRequired,
   deleteMember: PropTypes.func.isRequired,
   getMembers: PropTypes.func.isRequired,
@@ -159,7 +159,7 @@ TableMembers.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  model: state.member
+  model: state.modelMember
 })
 
-export default connect(mapStateToProps, {getMembers, deleteMember, getMember})(withStyles(extendedTablesStyle)(TableMembers));
+export default connect(mapStateToProps, {getMembers, deleteMember, getMember})(withStyles(extendedTablesStyle)(MemberSummary));

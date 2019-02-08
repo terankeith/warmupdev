@@ -16,16 +16,29 @@ router.post("/", (req, res) => {
     return res.status(400).json(errors);
   }
 
-  const newMember = new Member({
+  const memberFields = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     grade: req.body.grade
-  });
+  };
 
-  newMember
-    .save()
-    .then(member => res.json(member))
-    .catch(err => console.log(err));
+  Member.findOne({ _id: req.body._id }).then(member => {
+    if (member) {
+      //update
+      Member.findOneAndUpdate(
+        { _id: req.body._id },
+        { $set: memberFields },
+        { new: true }
+      ).then(member => res.json(member));
+    } else {
+      //create
+
+      new Member(memberFields)
+        .save()
+        .then(member => res.json(member))
+        .catch(err => console.log(err));
+    }
+  });
 });
 //#endregion
 

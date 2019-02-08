@@ -4,6 +4,6 @@ import reducerMember from "./reducerMember";
 import reducerError from "./reducerError";
 
 export default combineReducers({
-  member: reducerMember,
+  modelMember: reducerMember,
   errors: reducerError
 });
