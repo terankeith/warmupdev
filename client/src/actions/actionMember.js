@@ -1,10 +1,16 @@
 import axios from "axios";
-import { GET_ERRORS, GET_MEMBERS, ADD_MEMBER, DELETE_MEMBER } from "./actions";
+import {
+  GET_ERRORS,
+  GET_MEMBERS,
+  ADD_MEMBER,
+  DELETE_MEMBER,
+  GET_MEMBER
+} from "./actions";
 //an action is a method that interacts with the db
 
 export const saveMember = (memberData, history) => dispatch => {
   axios
-    .post("/api/members/add", memberData)
+    .post("/api/members", memberData)
     .then(res =>
       dispatch({
         type: ADD_MEMBER,
@@ -15,6 +21,23 @@ export const saveMember = (memberData, history) => dispatch => {
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
+      })
+    );
+};
+
+export const getMember = id => dispatch => {
+  axios
+    .get(`/api/members/${id}`)
+    .then(res =>
+      dispatch({
+        type: GET_MEMBER,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: null
       })
     );
 };

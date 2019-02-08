@@ -1,8 +1,8 @@
 import {
-  GET_ERRORS,
   GET_MEMBERS,
   ADD_MEMBER,
-  DELETE_MEMBER
+  DELETE_MEMBER,
+  GET_MEMBER
 } from "../actions/actions";
 
 const initialState = {
@@ -16,6 +16,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         members: [action.payload, ...state.members]
+      };
+    case GET_MEMBER:
+      return {
+        ...state,
+        member: action.payload
       };
     case GET_MEMBERS:
       return {

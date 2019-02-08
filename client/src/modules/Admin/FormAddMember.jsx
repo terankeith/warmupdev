@@ -1,7 +1,11 @@
+//#region IMPORT
 import React, {Component} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
+
+//ACTIONS
+import {saveMember} from "actions/actionMember.js";
 
 //COMPONENTS MATERIAL UI
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -24,11 +28,8 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 
-//REDUX
-
-import {saveMember} from "actions/actionMember.js";
-
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
+//#endregion
 
 class FormAddMember extends Component{
     constructor(){
@@ -66,6 +67,8 @@ class FormAddMember extends Component{
           //allowing user to redirect from within memberAction
           //this method takes me to the memberAction
           this.props.saveMember(newMember, this.props.history);
+
+          this.resetForm();
       }
     //#endregion
 
@@ -82,13 +85,14 @@ class FormAddMember extends Component{
     render(){
         const { classes } = this.props;
         const { errors } = this.state;
+        const { member } = this.props.model;
         return <div>
             <Card>
                 <CardHeader color="rose" icon>
                     <CardIcon color="rose">
                         <Contacts />
                     </CardIcon>
-                    <h4 className={classes.cardIconTitle}><strong>Add A Member</strong></h4>
+                    <h4 className={classes.cardIconTitle}><strong>{member._id ? "Edit Member":"Add a Member"}</strong></h4>
                 </CardHeader>
                 <CardBody>
                     <form onSubmit={this.onSubmit}>

@@ -6,10 +6,10 @@ const validateMemberInput = require("../../validation/models/validateMember");
 
 const Member = require("../../models/Member");
 
-//#region POST api/members/add
+//#region POST api/members/
 //@desc Adds member to db
 //@access Public
-router.post("/add", (req, res) => {
+router.post("/", (req, res) => {
   const { errors, isValid } = validateMemberInput(req.body);
 
   if (!isValid) {
@@ -36,6 +36,18 @@ router.get("/", (req, res) => {
   Member.find().then(members => {
     res.json(members);
   });
+});
+//#endregion
+
+//#region GET api/members/:id
+//@desc GET Single Member
+//@access PUBLIC
+router.get("/:id", (req, res) => {
+  Member.findById(req.params.id)
+    .then(member => {
+      res.json(member);
+    })
+    .catch(err => res.status(404).json({ membernotfound: "Member not found" }));
 });
 //#endregion
 

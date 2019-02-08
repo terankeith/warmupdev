@@ -3,6 +3,9 @@ import React, {Component} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
+//ACTIONS
+import {getMembers, deleteMember, getMember} from "actions/actionMember.js";
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 
@@ -21,10 +24,6 @@ import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
-
-//ACTIONS
-import {getMembers} from "actions/actionMember.js";
-import {deleteMember} from "actions/actionMember.js";
 
 import extendedTablesStyle from "assets/jss/material-dashboard-pro-react/views/extendedTablesStyle.jsx";
 //#endregion
@@ -65,6 +64,10 @@ class TableMembers extends Component {
     this.props.deleteMember(id);
   }
 
+  onEditClick(id){
+    this.props.getMember(id);
+  }
+
   //#endregion
   
   render() {
@@ -85,7 +88,7 @@ class TableMembers extends Component {
         );
         case "success":
         return (
-          <Button color={prop.color} className={classes.actionButton} key={key}>
+          <Button color={prop.color} className={classes.actionButton} key={key} onClick={this.onEditClick.bind(this, memberID)}>
             <prop.icon className={classes.icon} />
           </Button>
         );
@@ -94,6 +97,10 @@ class TableMembers extends Component {
           <Button color={prop.color} className={classes.actionButton} key={key} onClick={this.onDeleteClick.bind(this, memberID)}>
             <prop.icon className={classes.icon} />
           </Button>
+        );
+        default:
+        return (
+          "No Button"
         );
       }
       
@@ -145,6 +152,7 @@ class TableMembers extends Component {
 }
 
 TableMembers.propTypes = {
+  getMember: PropTypes.func.isRequired,
   deleteMember: PropTypes.func.isRequired,
   getMembers: PropTypes.func.isRequired,
   model: PropTypes.object.isRequired
@@ -154,4 +162,4 @@ const mapStateToProps = (state) => ({
   model: state.member
 })
 
-export default connect(mapStateToProps, {getMembers, deleteMember})(withStyles(extendedTablesStyle)(TableMembers));
+export default connect(mapStateToProps, {getMembers, deleteMember, getMember})(withStyles(extendedTablesStyle)(TableMembers));
