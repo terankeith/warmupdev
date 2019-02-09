@@ -5,7 +5,8 @@ import {
   ADD_MEMBER,
   DELETE_MEMBER,
   GET_MEMBER,
-  EDIT_MEMBER
+  EDIT_MEMBER,
+  LOADING_MEMBERS
 } from "./actions";
 //an action is a method that interacts with the db
 
@@ -51,6 +52,7 @@ export const getMember = id => dispatch => {
 };
 
 export const getMembers = () => dispatch => {
+  dispatch(setMembersLoading());
   axios
     .get("/api/members")
     .then(res =>
@@ -82,4 +84,10 @@ export const deleteMember = id => dispatch => {
         payload: err.response.data
       })
     );
+};
+
+export const setMembersLoading = () => {
+  return {
+    type: LOADING_MEMBERS
+  };
 };

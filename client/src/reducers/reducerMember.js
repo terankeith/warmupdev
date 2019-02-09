@@ -3,16 +3,23 @@ import {
   ADD_MEMBER,
   DELETE_MEMBER,
   GET_MEMBER,
-  EDIT_MEMBER
+  EDIT_MEMBER,
+  LOADING_MEMBERS
 } from "../actions/actions";
 
 const initialState = {
   members: [],
-  member: {}
+  member: {},
+  loading: false
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case LOADING_MEMBERS:
+      return {
+        ...state,
+        loading: true
+      };
     case ADD_MEMBER:
       return {
         ...state,
@@ -40,7 +47,8 @@ export default function(state = initialState, action) {
     case GET_MEMBERS:
       return {
         ...state,
-        members: action.payload
+        members: action.payload,
+        loading: false
       };
     case DELETE_MEMBER:
       return {

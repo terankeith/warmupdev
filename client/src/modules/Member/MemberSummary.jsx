@@ -24,6 +24,7 @@ import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
+import Spinner from "components/Spinner/Spinner.jsx";
 
 import extendedTablesStyle from "assets/jss/material-dashboard-pro-react/views/extendedTablesStyle.jsx";
 //#endregion
@@ -72,7 +73,7 @@ class MemberSummary extends Component {
   
   render() {
     const { classes } = this.props;
-    const { members } = this.props.model;
+    const { members, loading } = this.props.model;
 
     const fillButtons = (memberID) => [
       { color: "info", icon: Person },
@@ -103,8 +104,41 @@ class MemberSummary extends Component {
           "No Button"
         );
       }
-      
     });
+
+    let tableContent;
+
+    if (members === null || loading){
+      tableContent = <Spinner/>
+    }
+    else{
+      tableContent = <Table
+      tableHead={[
+        "Name",
+        "Grade",
+        "Actions"
+      ]}
+      tableData={
+        members.map(member =>{
+          return (
+            [member.firstName + " " + member.lastName, member.grade, fillButtons(member._id)]
+          );
+        })
+      }
+      customCellClasses={[
+        classes.center,
+        classes.right,
+        classes.right
+      ]}
+      customClassesForCells={[0, 4, 5]}
+      customHeadCellClasses={[
+        classes.center,
+        classes.right,
+        classes.right
+      ]}
+      customHeadClassesForCells={[0, 4, 5]}
+    />
+    }
     
     return (
       <GridContainer>
@@ -114,35 +148,10 @@ class MemberSummary extends Component {
               <CardIcon color="rose">
                 <Assignment />
               </CardIcon>
-              <h4 className={classes.cardIconTitle}><strong>River Valley 2019</strong></h4>
+              <h4 className={classes.cardIconTitle}><strong>River Valley 2019 Winter</strong></h4>
             </CardHeader>
             <CardBody>
-              <Table
-                tableHead={[
-                  "Name",
-                  "Grade",
-                  "Actions"
-                ]}
-                tableData={
-                  members.map(member =>{
-                    return (
-                      [member.firstName + " " + member.lastName, member.grade, fillButtons(member._id)]
-                    );
-                  })
-                }
-                customCellClasses={[
-                  classes.center,
-                  classes.right,
-                  classes.right
-                ]}
-                customClassesForCells={[0, 4, 5]}
-                customHeadCellClasses={[
-                  classes.center,
-                  classes.right,
-                  classes.right
-                ]}
-                customHeadClassesForCells={[0, 4, 5]}
-              />
+              {tableContent}
             </CardBody>
           </Card>
         </GridItem>

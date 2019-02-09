@@ -4,6 +4,7 @@ export const ADD_MEMBER = "ADD_MEMBER";
 export const EDIT_MEMBER = "EDIT_MEMBER";
 export const DELETE_MEMBER = "DELETE_MEMBER";
 export const GET_MEMBER = "GET_MEMBER";
+export const LOADING_MEMBERS = "LOADING_MEMBERS";
 
 //ERRORS
 export const GET_ERRORS = "GET_ERRORS";

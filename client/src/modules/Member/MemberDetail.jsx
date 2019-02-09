@@ -97,6 +97,22 @@ class MemberDetail extends Component{
         const { classes } = this.props;
         const { errors } = this.state;
         const { member } = this.props.model;
+        const ddlGrades = [
+            {value: "9", text: "Freshman"},
+            {value: "10", text: "Sophomore"},
+            {value: "11", text: "Junior"},
+            {value: "12", text: "Senior"},
+            {value: "13", text: "Collegiate"}
+        ].map((prop, i) => {
+            return (<MenuItem key={i} classes={{
+                root: classes.selectMenuItem,
+                selected: classes.selectMenuItemSelected
+                }}
+                value={prop.value}>
+            {prop.text}
+            </MenuItem>);
+        })
+
         return <div>
             <Card>
                 <CardHeader color="rose" icon>
@@ -162,7 +178,7 @@ class MemberDetail extends Component{
                             <GridItem xs={12} sm={4} md={4} lg={8}>
                                 <FormControl fullWidth className={classes.selectFormControl}>
                                     <InputLabel htmlFor="grade" className={classes.selectLabel}>
-                                        Grade
+                                        Grade Levels
                                     </InputLabel>
                                     <Select MenuProps={{
                                                     className: classes.selectMenu
@@ -174,39 +190,7 @@ class MemberDetail extends Component{
                                                     name: "grade", 
                                                     id: "grade"
                                                 }}>
-                                        <MenuItem disabled classes={{
-                                                    root: classes.selectMenuItem
-                                                    }}>
-                                        Grade Levels
-                                        </MenuItem>
-                                        <MenuItem classes={{
-                                                    root: classes.selectMenuItem,
-                                                    selected: classes.selectMenuItemSelected
-                                                    }}
-                                            value="9">
-                                        Freshman
-                                        </MenuItem>
-                                        <MenuItem classes={{
-                                                    root: classes.selectMenuItem,
-                                                    selected: classes.selectMenuItemSelected
-                                                    }}
-                                            value="10">
-                                        Sophomore
-                                        </MenuItem>
-                                        <MenuItem classes={{
-                                                    root: classes.selectMenuItem,
-                                                    selected: classes.selectMenuItemSelected
-                                                    }}
-                                            value="11">
-                                        Junior
-                                        </MenuItem>
-                                        <MenuItem classes={{
-                                                    root: classes.selectMenuItem,
-                                                    selected: classes.selectMenuItemSelected
-                                                    }}
-                                            value="12">
-                                        Senior
-                                        </MenuItem>
+                                        {ddlGrades}
                                     </Select>
                                 </FormControl>
                             </GridItem>
