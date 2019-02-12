@@ -8,3 +8,6 @@ export const LOADING_MEMBERS = "LOADING_MEMBERS";
 
 //ERRORS
 export const GET_ERRORS = "GET_ERRORS";
+
+//ALERTS
+export const ALERT_SUCCESS = "ALERT_SUCCESS";

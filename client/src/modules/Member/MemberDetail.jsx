@@ -1,8 +1,9 @@
 //#region IMPORT
 import React, {Component} from "react";
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
+//import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
+import {connect} from "react-redux";
 
 //ACTIONS
 import {saveMember} from "actions/actionMember.js";
@@ -17,6 +18,7 @@ import FormControl from "@material-ui/core/FormControl";
 
 //ICONS
 import Contacts from "@material-ui/icons/Contacts";
+import AddAlert from "@material-ui/icons/AddAlert";
 
 //COMPONENTS
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -27,6 +29,7 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
+import Snackbar from "components/Snackbar/Snackbar.jsx";
 
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 //#endregion
@@ -37,66 +40,88 @@ class MemberDetail extends Component{
         this.state = {
             firstName: "",
             lastName: "",
-            grade: "",
-            errors: {}
-        };
+            grade:"",
+            errors: {},
+            alert: {},
+            isEdit: false,
+            tl: false
+        }
+
+        this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     //#region LIFECYCLE
-    componentWillReceiveProps(nextProps){
-        if (nextProps.errors){
-            this.setState({errors: nextProps.errors});
+    
+    componentWillReceiveProps(newProps){
+        if (newProps.errors){
+            this.setState({errors: newProps.errors});
         }
 
-        if (nextProps.model.member){
-            const editMember = nextProps.model.member;
+        if (newProps.alert){
+            this.setState({alert: newProps.alert});
+        }
+
+        if (newProps.member !== this.props.member){
+            const editMember = newProps.member;
 
             this.setState({
                 firstName: editMember.firstName, 
                 lastName: editMember.lastName,
-                grade: editMember.grade
+                grade: editMember.grade,
+                isEdit: true
             })
+        }
+    }
+
+    componentDidUpdate(){
+        if (this.state.alert.success){
+            this.showNotification("tl");
         }
     }
     //#endregion
 
     //#region EVENTS
-    onChange = e => {
+    onChange(e) {
         this.setState({ [e.target.name]: e.target.value });
       }
 
-      onSubmit = e => {
-          e.preventDefault();
-        
-          const { member } = this.props.model;
+      onSubmit(e){
+        e.preventDefault();
+    
+        const { member } = this.props;
 
-          member.firstName = this.state.firstName;
-          member.lastName = this.state.lastName;
-          member.grade = this.state.grade;
-          var isNew = member._id ? false : true;
+        member.firstName = this.state.firstName;
+        member.lastName = this.state.lastName;
+        member.grade = this.state.grade;
+        var isNew = member._id ? false : true;
 
-          //allowing user to redirect from within memberAction
-          //this method takes me to the memberAction
-          this.props.saveMember(member, this.props.history, isNew);
-
-          //this.resetForm();
-      }
-    //#endregion
-
-    //#region HELPERS
-    resetForm(){
-        this.setState({
-            firstName: "",
-            lastName: "",
-            grade: ""
-        })
+        //allowing user to redirect from within memberAction
+        //this method takes me to the memberAction
+        this.props.saveMember(member, this.props.history, isNew);
+        //this.resetForm();
     }
     //#endregion
     
+    //#region ALERTS
+    showNotification(place) {
+        if (!this.state[place]) {
+          var x = [];
+          x[place] = true;
+          this.setState(x);
+          setTimeout(
+            function() {
+              x[place] = false;
+              this.setState(x);
+            }.bind(this),
+            6000
+          );
+        }
+      }
+    //#endregion
     render(){
         const { classes } = this.props;
         const { errors } = this.state;
-        const { member } = this.props.model;
         const ddlGrades = [
             {value: "9", text: "Freshman"},
             {value: "10", text: "Sophomore"},
@@ -119,7 +144,7 @@ class MemberDetail extends Component{
                     <CardIcon color="rose">
                         <Contacts />
                     </CardIcon>
-                    <h4 className={classes.cardIconTitle}><strong>{member._id ? "Edit Member":"Add a Member"}</strong></h4>
+                    <h4 className={classes.cardIconTitle}><strong>{this.state.isEdit ? "Edit Member":"Add a Member"}</strong></h4>
                 </CardHeader>
                 <CardBody>
                     <form onSubmit={this.onSubmit}>
@@ -157,9 +182,7 @@ class MemberDetail extends Component{
                                 <CustomInput
                                 id="lastName"
                                 error={errors.lastName ? true : false}
-                                formControlProps={{
-                                    fullWidth: true
-                                }}
+                                formControlProps={{fullWidth: true}}
                                 inputProps={{
                                     type: "text",
                                     value: this.state.lastName,
@@ -180,16 +203,12 @@ class MemberDetail extends Component{
                                     <InputLabel htmlFor="grade" className={classes.selectLabel}>
                                         Grade Levels
                                     </InputLabel>
-                                    <Select MenuProps={{
-                                                    className: classes.selectMenu
-                                                }}
-                                        classes={{
-                                                    select: classes.select
-                                                }}
-                                        value={this.state.grade} onChange={this.onChange} inputProps={{
-                                                    name: "grade", 
-                                                    id: "grade"
-                                                }}>
+                                    <Select 
+                                        MenuProps={{className: classes.selectMenu}}
+                                        classes={{select: classes.select}}
+                                        value={this.state.grade} 
+                                        onChange={this.onChange}
+                                        inputProps={{name: "grade", id: "grade"}}>
                                         {ddlGrades}
                                     </Select>
                                 </FormControl>
@@ -200,6 +219,16 @@ class MemberDetail extends Component{
                                 <Button color="rose" type="submit">Submit</Button>
                             </GridItem>
                         </GridContainer>
+                        
+                        <Snackbar
+                            place="tl"
+                            color="success"
+                            icon={AddAlert}
+                            message="Welcome to MATERIAL DASHBOARD React - a beautiful freebie for every web developer."
+                            open={this.state.tl}
+                            closeNotification={() => this.setState({ tl: false })}
+                            close
+                        />
                     </form>
                 </CardBody>
             </Card>
@@ -209,13 +238,7 @@ class MemberDetail extends Component{
 
 MemberDetail.propTypes = {
     saveMember: PropTypes.func.isRequired,
-    model: PropTypes.object.isRequired,
-    errors: PropTypes.object.isRequired
+    member: PropTypes.object.isRequired
 }
 
-const mapStateToProps = (state) => ({
-    model: state.modelMember,
-    errors: state.errors
-})
-
-export default connect(mapStateToProps, {saveMember})(withStyles(regularFormsStyle)(withRouter(MemberDetail)));
+export default connect(null, {saveMember})(withStyles(regularFormsStyle)(withRouter(MemberDetail)));

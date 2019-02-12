@@ -4,7 +4,8 @@ import {
   DELETE_MEMBER,
   GET_MEMBER,
   EDIT_MEMBER,
-  LOADING_MEMBERS
+  LOADING_MEMBERS,
+  ALERT_SUCCESS
 } from "../actions/actions";
 
 const initialState = {

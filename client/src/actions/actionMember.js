@@ -6,7 +6,8 @@ import {
   DELETE_MEMBER,
   GET_MEMBER,
   EDIT_MEMBER,
-  LOADING_MEMBERS
+  LOADING_MEMBERS,
+  ALERT_SUCCESS
 } from "./actions";
 //an action is a method that interacts with the db
 
@@ -19,6 +20,7 @@ export const saveMember = (memberData, history, isNew) => dispatch => {
           type: ADD_MEMBER,
           payload: res.data
         });
+        dispatch(setShowSuccessAlert());
       } else {
         dispatch({
           type: EDIT_MEMBER,
@@ -89,5 +91,12 @@ export const deleteMember = id => dispatch => {
 export const setMembersLoading = () => {
   return {
     type: LOADING_MEMBERS
+  };
+};
+
+export const setShowSuccessAlert = () => {
+  return {
+    type: ALERT_SUCCESS,
+    payload: { success: true }
   };
 };

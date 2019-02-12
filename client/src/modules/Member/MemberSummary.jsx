@@ -1,10 +1,6 @@
 //#region IMPORT
 import React, {Component} from "react";
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
-
-//ACTIONS
-import {getMembers, deleteMember, getMember} from "actions/actionMember.js";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -24,56 +20,29 @@ import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
-import Spinner from "components/Spinner/Spinner.jsx";
+
 
 import extendedTablesStyle from "assets/jss/material-dashboard-pro-react/views/extendedTablesStyle.jsx";
 //#endregion
 
 class MemberSummary extends Component {
-  constructor(props) {
+  constructor(props){
     super(props);
     this.state = {
-      checked: []
-    };
-    this.handleToggle = this.handleToggle.bind(this);
-  }
-
-  //#region LIFECYCLE
-  componentDidMount(){
-    this.props.getMembers();
-  }
-  //#endregion
-
-  //#region EVENTS
-  handleToggle(value) {
-    const { checked } = this.state;
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
+      members: []
     }
-
-    this.setState({
-      checked: newChecked
-    });
   }
 
-  onDeleteClick(id){
-    this.props.deleteMember(id);
+  componentWillReceiveProps(nextProps){
+    if (nextProps.members){
+      this.setState({
+        members: nextProps.members
+      })
+    }
   }
-
-  onEditClick(id){
-    this.props.getMember(id);
-  }
-
-  //#endregion
-  
   render() {
     const { classes } = this.props;
-    const { members, loading } = this.props.model;
+    const { members } = this.props;
 
     const fillButtons = (memberID) => [
       { color: "info", icon: Person },
@@ -89,13 +58,13 @@ class MemberSummary extends Component {
         );
         case "success":
         return (
-          <Button color={prop.color} className={classes.actionButton} key={key} onClick={this.onEditClick.bind(this, memberID)}>
+          <Button color={prop.color} className={classes.actionButton} key={key} onClick={this.props.onEditClick.bind(this, memberID)}>
             <prop.icon className={classes.icon} />
           </Button>
         );
         case "danger":
         return (
-          <Button color={prop.color} className={classes.actionButton} key={key} onClick={this.onDeleteClick.bind(this, memberID)}>
+          <Button color={prop.color} className={classes.actionButton} key={key} onClick={this.props.onDeleteClick.bind(this, memberID)}>
             <prop.icon className={classes.icon} />
           </Button>
         );
@@ -105,40 +74,6 @@ class MemberSummary extends Component {
         );
       }
     });
-
-    let tableContent;
-
-    if (members === null || loading){
-      tableContent = <Spinner/>
-    }
-    else{
-      tableContent = <Table
-      tableHead={[
-        "Name",
-        "Grade",
-        "Actions"
-      ]}
-      tableData={
-        members.map(member =>{
-          return (
-            [member.firstName + " " + member.lastName, member.grade, fillButtons(member._id)]
-          );
-        })
-      }
-      customCellClasses={[
-        classes.center,
-        classes.right,
-        classes.right
-      ]}
-      customClassesForCells={[0, 4, 5]}
-      customHeadCellClasses={[
-        classes.center,
-        classes.right,
-        classes.right
-      ]}
-      customHeadClassesForCells={[0, 4, 5]}
-    />
-    }
     
     return (
       <GridContainer>
@@ -151,7 +86,32 @@ class MemberSummary extends Component {
               <h4 className={classes.cardIconTitle}><strong>River Valley 2019 Winter</strong></h4>
             </CardHeader>
             <CardBody>
-              {tableContent}
+            <Table
+              tableHead={[
+                "Name",
+                "Grade",
+                "Actions"
+              ]}
+              tableData={
+                members.map(member =>{
+                  return (
+                    [member.firstName + " " + member.lastName, member.grade, fillButtons(member._id)]
+                  );
+                })
+              }
+              customCellClasses={[
+                classes.center,
+                classes.right,
+                classes.right
+              ]}
+              customClassesForCells={[0, 4, 5]}
+              customHeadCellClasses={[
+                classes.center,
+                classes.right,
+                classes.right
+              ]}
+              customHeadClassesForCells={[0, 4, 5]}
+            />
             </CardBody>
           </Card>
         </GridItem>
@@ -161,14 +121,9 @@ class MemberSummary extends Component {
 }
 
 MemberSummary.propTypes = {
-  getMember: PropTypes.func.isRequired,
-  deleteMember: PropTypes.func.isRequired,
-  getMembers: PropTypes.func.isRequired,
-  model: PropTypes.object.isRequired
+  members: PropTypes.array.isRequired,
+  onDeleteClick: PropTypes.func.isRequired,
+  onEditClick: PropTypes.func.isRequired
 }
 
-const mapStateToProps = (state) => ({
-  model: state.modelMember
-})
-
-export default connect(mapStateToProps, {getMembers, deleteMember, getMember})(withStyles(extendedTablesStyle)(MemberSummary));
+export default (withStyles(extendedTablesStyle)(MemberSummary));
