@@ -6,7 +6,7 @@ import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 
 //ACTIONS
-import {saveMember} from "actions/actionMember.js";
+import {saveMember, closeAlert} from "actions/actionMember.js";
 
 //COMPONENTS MATERIAL UI
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -42,7 +42,6 @@ class MemberDetail extends Component{
             lastName: "",
             grade:"",
             errors: {},
-            alert: {},
             isEdit: false,
             tl: false
         }
@@ -58,10 +57,6 @@ class MemberDetail extends Component{
             this.setState({errors: newProps.errors});
         }
 
-        if (newProps.alert){
-            this.setState({alert: newProps.alert});
-        }
-
         if (newProps.member !== this.props.member){
             const editMember = newProps.member;
 
@@ -72,11 +67,18 @@ class MemberDetail extends Component{
                 isEdit: true
             })
         }
-    }
 
-    componentDidUpdate(){
-        if (this.state.alert.success){
-            this.showNotification("tl");
+        if (newProps.alert !== this.props.alert){
+            
+            if (newProps.alert){
+                this.showNotification("tl");
+            }
+            else{
+                this.setState({
+                    tl: newProps.alert
+                })
+            }
+            
         }
     }
     //#endregion
@@ -84,11 +86,11 @@ class MemberDetail extends Component{
     //#region EVENTS
     onChange(e) {
         this.setState({ [e.target.name]: e.target.value });
-      }
+    }
 
-      onSubmit(e){
+    onSubmit(e){
         e.preventDefault();
-    
+
         const { member } = this.props;
 
         member.firstName = this.state.firstName;
@@ -101,8 +103,22 @@ class MemberDetail extends Component{
         this.props.saveMember(member, this.props.history, isNew);
         //this.resetForm();
     }
+
+    onClose = () => {
+        this.props.closeAlert();
+    }
     //#endregion
     
+    //#region HELPERS
+    resetForm(){
+        this.setState({
+            firstName: "",
+            lastName: "",
+            grade: ""
+        })
+    }
+    //#endregion
+
     //#region ALERTS
     showNotification(place) {
         if (!this.state[place]) {
@@ -111,13 +127,17 @@ class MemberDetail extends Component{
           this.setState(x);
           setTimeout(
             function() {
-              x[place] = false;
-              this.setState(x);
+            //   x[place] = false;
+            //   this.setState(x);
+                if (x[place]){
+                    this.onClose();
+                }
             }.bind(this),
-            6000
+            4000
           );
         }
       }
+    
     //#endregion
     render(){
         const { classes } = this.props;
@@ -224,9 +244,9 @@ class MemberDetail extends Component{
                             place="tl"
                             color="success"
                             icon={AddAlert}
-                            message="Welcome to MATERIAL DASHBOARD React - a beautiful freebie for every web developer."
+                            message="Member successfully added!"
                             open={this.state.tl}
-                            closeNotification={() => this.setState({ tl: false })}
+                            closeNotification={this.onClose}
                             close
                         />
                     </form>
@@ -237,8 +257,9 @@ class MemberDetail extends Component{
 }
 
 MemberDetail.propTypes = {
+    closeAlert: PropTypes.func.isRequired,
     saveMember: PropTypes.func.isRequired,
     member: PropTypes.object.isRequired
 }
 
-export default connect(null, {saveMember})(withStyles(regularFormsStyle)(withRouter(MemberDetail)));
+export default connect(null, {saveMember, closeAlert})(withStyles(regularFormsStyle)(withRouter(MemberDetail)));

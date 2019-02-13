@@ -13,6 +13,9 @@ const MemberSchema = new Schema({
   grade: {
     type: String,
     required: true
+  },
+  age: {
+    type: Number
   }
 });
 

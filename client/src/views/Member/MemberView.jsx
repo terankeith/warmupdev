@@ -49,9 +49,8 @@ class MemberView extends Component {
 
   render() {
     //const { classes } = this.props;
-    const {member, members, loading} = this.props.model;
+    const {member, members, loading, alert} = this.props.model;
     const { errors } = this.props;
-    const { alert } = this.props;
     let membersContent;
 
     if (members === null || loading){
@@ -90,14 +89,12 @@ MemberView.propTypes = {
     getMember: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
     model: PropTypes.object.isRequired,
-    errors: PropTypes.object.isRequired,
-    alert: PropTypes.object.isRequired
+    errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
     model: state.modelMember,
-    errors: state.errors,
-    alert: state.alert
+    errors: state.errors
 })
 
 export default connect(mapStateToProps, {getMembers, deleteMember, getMember})(withStyles(dashboardStyle)(MemberView));

@@ -10,4 +10,5 @@ export const LOADING_MEMBERS = "LOADING_MEMBERS";
 export const GET_ERRORS = "GET_ERRORS";
 
 //ALERTS
-export const ALERT_SUCCESS = "ALERT_SUCCESS";
+export const ALERT_OPEN = "ALERT_OPEN";
+export const ALERT_CLOSE = "ALERT_CLOSE";

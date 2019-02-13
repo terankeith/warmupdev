@@ -5,13 +5,14 @@ import {
   GET_MEMBER,
   EDIT_MEMBER,
   LOADING_MEMBERS,
-  ALERT_SUCCESS
+  ALERT_CLOSE
 } from "../actions/actions";
 
 const initialState = {
   members: [],
   member: {},
-  loading: false
+  loading: false,
+  alert: false
 };
 
 export default function(state = initialState, action) {
@@ -24,7 +25,8 @@ export default function(state = initialState, action) {
     case ADD_MEMBER:
       return {
         ...state,
-        members: [action.payload, ...state.members]
+        members: [action.payload, ...state.members],
+        alert: true
       };
     case EDIT_MEMBER:
       return {
@@ -55,6 +57,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         members: state.members.filter(member => member._id !== action.payload)
+      };
+    case ALERT_CLOSE:
+      return {
+        ...state,
+        alert: false
       };
     default:
       return state;

@@ -7,10 +7,10 @@ import {
   GET_MEMBER,
   EDIT_MEMBER,
   LOADING_MEMBERS,
-  ALERT_SUCCESS
+  ALERT_OPEN,
+  ALERT_CLOSE
 } from "./actions";
 //an action is a method that interacts with the db
-
 export const saveMember = (memberData, history, isNew) => dispatch => {
   axios
     .post("/api/members", memberData)
@@ -20,7 +20,6 @@ export const saveMember = (memberData, history, isNew) => dispatch => {
           type: ADD_MEMBER,
           payload: res.data
         });
-        dispatch(setShowSuccessAlert());
       } else {
         dispatch({
           type: EDIT_MEMBER,
@@ -94,9 +93,8 @@ export const setMembersLoading = () => {
   };
 };
 
-export const setShowSuccessAlert = () => {
-  return {
-    type: ALERT_SUCCESS,
-    payload: { success: true }
-  };
+export const closeAlert = () => dispatch => {
+  dispatch({
+    type: ALERT_CLOSE
+  });
 };

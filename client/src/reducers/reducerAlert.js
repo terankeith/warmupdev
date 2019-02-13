@@ -1,11 +1,13 @@
-import { ALERT_SUCCESS } from "../actions/actions";
+import { ALERT_OPEN, ALERT_CLOSE } from "../actions/actions";
 
 const initialState = {};
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case ALERT_SUCCESS:
-      return action.payload;
+    case ALERT_OPEN:
+      return true;
+    case ALERT_CLOSE:
+      return false;
     default:
       return state;
   }
