@@ -5,6 +5,7 @@ module.exports = function validateMemberInput(data) {
 
   data.firstName = !isEmpty(data.firstName) ? data.firstName : "";
   data.lastName = !isEmpty(data.lastName) ? data.lastName : "";
+  data.grade = !isEmpty(data.grade) ? data.grade : "";
 
   //FIRST NAME
   if (Validator.isEmpty(data.firstName)) {
@@ -14,6 +15,11 @@ module.exports = function validateMemberInput(data) {
   //LAST NAME
   if (Validator.isEmpty(data.lastName)) {
     errors.lastName = "Must enter last name";
+  }
+
+  //GRADE
+  if (Validator.isEmpty(data.grade)) {
+    errors.grade = "Must select a grade level";
   }
   return {
     errors,

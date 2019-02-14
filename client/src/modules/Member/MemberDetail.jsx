@@ -214,7 +214,8 @@ class MemberDetail extends Component{
                         </GridContainer>
                         <GridContainer>
                             <GridItem xs={12} sm={12} md={3}>
-                                <FormLabel className={classes.labelHorizontal}>
+                                <FormLabel className={classes.labelHorizontal}
+                                error={errors.grade ? true : false}>
                                 Grade
                                 </FormLabel>
                             </GridItem>

@@ -7,7 +7,6 @@ import {
   GET_MEMBER,
   EDIT_MEMBER,
   LOADING_MEMBERS,
-  ALERT_OPEN,
   ALERT_CLOSE
 } from "./actions";
 //an action is a method that interacts with the db
