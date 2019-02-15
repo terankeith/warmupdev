@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
 //ACTIONS
-import { getMembers, deleteMember, getMember } from "actions/actionMember.js";
+import { getMembers, deleteMember, getMember } from "actions/memberAction.js";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";

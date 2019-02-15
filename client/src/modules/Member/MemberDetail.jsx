@@ -6,7 +6,7 @@ import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 
 //ACTIONS
-import {saveMember, closeAlert} from "actions/actionMember.js";
+import {saveMember, closeAlert} from "actions/memberAction.js";
 
 //COMPONENTS MATERIAL UI
 import withStyles from "@material-ui/core/styles/withStyles";

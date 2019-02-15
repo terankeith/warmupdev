@@ -1,12 +1,11 @@
 import { combineReducers } from "redux";
 
-import reducerMember from "./reducerMember";
-import reducerError from "./reducerError";
-//import reducerAlert from "./reducerError";
+import memberReducer from "./memberReducer";
+import errorReducer from "./errorReducer";
 import seasonReducer from "./seasonReducer";
 
 export default combineReducers({
-  modelMember: reducerMember,
-  errors: reducerError,
+  modelMember: memberReducer,
+  errors: errorReducer,
   seasonModel: seasonReducer
 });
