@@ -6,6 +6,9 @@ export const DELETE_MEMBER = "DELETE_MEMBER";
 export const GET_MEMBER = "GET_MEMBER";
 export const LOADING_MEMBERS = "LOADING_MEMBERS";
 
+//SEASONS
+export const GET_SEASONS = "GET_SEASONS";
+
 //ERRORS
 export const GET_ERRORS = "GET_ERRORS";
 

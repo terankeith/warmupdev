@@ -17,6 +17,12 @@ const SeasonSchema = new Schema({
   showTitle: {
     type: String
   },
+  memberdues: {
+    type: Number
+  },
+  icon: {
+    type: String
+  },
   membership: [
     {
       member: {

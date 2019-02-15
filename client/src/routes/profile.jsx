@@ -1,4 +1,5 @@
 import Members from "views/Member/MemberView.jsx";
+import Seasons from "views/Season/SeasonView.jsx";
 import Buttons from "views/Components/Buttons.jsx";
 import GridSystem from "views/Components/GridSystem.jsx";
 import Panels from "views/Components/Panels.jsx";
@@ -58,6 +59,12 @@ var pages = [
 ].concat(pagesRoutes);
 
 var profileRoutes = [
+  {
+    path:"/seasons",
+    name: "MBI Winter Guard",
+    icon:Apps,
+    component: Seasons
+  },
   {
     path: "/members",
     name: "Members",
@@ -203,6 +210,6 @@ var profileRoutes = [
   { path: "/widgets", name: "Widgets", icon: WidgetsIcon, component: Widgets },
   { path: "/charts", name: "Charts", icon: Timeline, component: Charts },
   { path: "/calendar", name: "Calendar", icon: DateRange, component: Calendar },
-  { redirect: true, path: "/", pathTo: "/members", name: "Members" }
+  { redirect: true, path: "/", pathTo: "/seasons", name: "Seasons" }
 ];
 export default profileRoutes;

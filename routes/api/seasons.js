@@ -24,7 +24,9 @@ router.post("/units/:id", (req, res) => {
           year: req.body.year,
           season: req.body.season,
           showTitle: req.body.showTitle,
-          memberShip: req.body.memberShip
+          membership: req.body.memberShip,
+          memberdues: req.body.memberdues,
+          icon: req.body.icon
         };
 
         new Season(newSeason)
@@ -73,8 +75,10 @@ router.get("/:id", (req, res) => {
 
 //#region GET api/seasons/unit/:id
 //@desc GETS seasons by unitID
-router.get("/units/:id", (req, res) => {
-  Season.find({ unit: req.params.id }).then(seasons => res.json(seasons));
+router.get("/unit/:id", (req, res) => {
+  Season.find({ unit: req.params.id })
+    .sort({ year: -1 })
+    .then(seasons => res.json(seasons));
 });
 
 //#endregion
