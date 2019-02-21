@@ -3,7 +3,7 @@ import {
   ADD_MEMBER,
   DELETE_MEMBER,
   GET_MEMBER,
-  EDIT_MEMBER,
+  UPDATED_MEMBER,
   LOADING_MEMBERS,
   ALERT_CLOSE
 } from "../actions/actions";
@@ -28,7 +28,7 @@ export default function(state = initialState, action) {
         members: [action.payload, ...state.members],
         alert: true
       };
-    case EDIT_MEMBER:
+    case UPDATED_MEMBER:
       return {
         ...state,
         members: state.members.map(member => {

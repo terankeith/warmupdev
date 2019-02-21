@@ -5,7 +5,7 @@ import {
   ADD_MEMBER,
   DELETE_MEMBER,
   GET_MEMBER,
-  EDIT_MEMBER,
+  UPDATED_MEMBER,
   LOADING_MEMBERS,
   ALERT_CLOSE
 } from "./actions";
@@ -21,7 +21,7 @@ export const saveMember = (memberData, history, isNew) => dispatch => {
         });
       } else {
         dispatch({
-          type: EDIT_MEMBER,
+          type: UPDATED_MEMBER,
           payload: res.data
         });
       }
