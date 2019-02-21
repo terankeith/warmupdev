@@ -7,6 +7,7 @@ import { getMembers, deleteMember, getMember } from "actions/memberAction.js";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
+import Assignment from "@material-ui/icons/Assignment";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -14,6 +15,10 @@ import GridItem from "components/Grid/GridItem.jsx";
 import MemberDetail from "modules/Member/MemberDetail.jsx";
 import MemberSummary from "modules/Member/MemberSummary.jsx";
 import Spinner from "components/Spinner/Spinner.jsx";
+import Card from "components/Card/Card.jsx";
+import CardBody from "components/Card/CardBody.jsx";
+import CardIcon from "components/Card/CardIcon.jsx";
+import CardHeader from "components/Card/CardHeader.jsx";
 
 
 import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashboardStyle";
@@ -50,7 +55,7 @@ class MemberView extends Component {
   render() {
     //const { classes } = this.props;
     const {member, members, loading, alert} = this.props.model;
-    const { errors } = this.props;
+    const { errors, classes } = this.props;
     let membersContent;
 
     if (members === null || loading){
@@ -75,7 +80,17 @@ class MemberView extends Component {
                 />
             </GridItem>
             <GridItem xs={12} sm={12} md={6}>
-                {membersContent}
+                <Card>
+                    <CardHeader color="rose" icon>
+                        <CardIcon color="rose">
+                            <Assignment />
+                        </CardIcon>
+                        <h4 className={classes.cardIconTitle}><strong>River Valley 2019 Winter</strong></h4>
+                    </CardHeader>
+                    <CardBody>
+                        {membersContent}
+                    </CardBody>
+                </Card>
             </GridItem>
         </GridContainer>
       </div>

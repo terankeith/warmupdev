@@ -6,20 +6,13 @@ import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 
 // material-ui icons
-import Assignment from "@material-ui/icons/Assignment";
 import Person from "@material-ui/icons/Person";
 import Edit from "@material-ui/icons/Edit";
 import Close from "@material-ui/icons/Close";
 
 // core components
-import GridContainer from "components/Grid/GridContainer.jsx";
-import GridItem from "components/Grid/GridItem.jsx";
 import Table from "components/Table/Table.jsx";
 import Button from "components/CustomButtons/Button.jsx";
-import Card from "components/Card/Card.jsx";
-import CardBody from "components/Card/CardBody.jsx";
-import CardIcon from "components/Card/CardIcon.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
 
 
 import extendedTablesStyle from "assets/jss/material-dashboard-pro-react/views/extendedTablesStyle.jsx";
@@ -76,16 +69,6 @@ class MemberSummary extends Component {
     });
     
     return (
-      <GridContainer>
-        <GridItem xs={12}>
-          <Card>
-            <CardHeader color="rose" icon>
-              <CardIcon color="rose">
-                <Assignment />
-              </CardIcon>
-              <h4 className={classes.cardIconTitle}><strong>River Valley 2019 Winter</strong></h4>
-            </CardHeader>
-            <CardBody>
             <Table
               tableHead={[
                 "Name",
@@ -112,10 +95,6 @@ class MemberSummary extends Component {
               ]}
               customHeadClassesForCells={[0, 4, 5]}
             />
-            </CardBody>
-          </Card>
-        </GridItem>
-      </GridContainer>
     );
   }
 }
