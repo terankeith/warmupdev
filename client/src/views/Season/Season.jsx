@@ -23,7 +23,7 @@ import CardHeader from "components/Card/CardHeader.jsx";
 
 import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashboardStyle";
 
-class MemberView extends Component {
+class Season extends Component {
     constructor(props){
         super(props);
 
@@ -98,7 +98,7 @@ class MemberView extends Component {
   }
 }
 
-MemberView.propTypes = {
+Season.propTypes = {
     deleteMember: PropTypes.func.isRequired,
     getMembers: PropTypes.func.isRequired,
     getMember: PropTypes.func.isRequired,
@@ -112,4 +112,4 @@ const mapStateToProps = (state) => ({
     errors: state.errors
 })
 
-export default connect(mapStateToProps, {getMembers, deleteMember, getMember})(withStyles(dashboardStyle)(MemberView));
+export default connect(mapStateToProps, {getMembers, deleteMember, getMember})(withStyles(dashboardStyle)(Season));

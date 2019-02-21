@@ -5,7 +5,7 @@ import errorReducer from "./errorReducer";
 import seasonReducer from "./seasonReducer";
 
 export default combineReducers({
-  modelMember: memberReducer,
+  memberModel: memberReducer,
   errors: errorReducer,
   seasonModel: seasonReducer
 });

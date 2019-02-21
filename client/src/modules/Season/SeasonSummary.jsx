@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
 //ACTIONS
-import { getSeasons } from "actions/seasonAction.js";
+import { getSeasons, getSeason } from "actions/seasonAction.js";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -31,6 +31,10 @@ class SeasonView extends Component {
         this.props.getSeasons("5c64a1e090e2b554952869aa");
     }
 
+    onClick(seasonId){
+        this.props.getSeason(seasonId);
+    }
+
     render(){
         const { classes } = this.props;
         const { seasons } = this.props.model;
@@ -38,7 +42,7 @@ class SeasonView extends Component {
         const seasonList = seasons.map(season =>{
             return(
                 <GridItem xs={12} sm={12} md={6} lg={4} key={season._id}>
-                    <Card profile>
+                    <Card profile onClick={this.onClick.bind(this, season._id)}>
                         <CardAvatar profile>
                             <a href="#pablo" onClick={e => e.preventDefault()}>
                                 <img src={require(`assets/img/units/${season.icon || "avatar.jpg"}`)} alt="..." />
@@ -66,6 +70,7 @@ class SeasonView extends Component {
 
 SeasonView.propTypes = {
     getSeasons: PropTypes.func.isRequired,
+    getSeason: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
     model: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
@@ -76,4 +81,4 @@ const mapStateToProps = (state) => ({
     errors: state.errors
 })
 
-export default connect(mapStateToProps, {getSeasons})(SeasonView);
+export default connect(mapStateToProps, {getSeasons, getSeason})(SeasonView);
