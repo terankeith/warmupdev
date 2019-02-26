@@ -1,34 +1,30 @@
 //#region IMPORT
 import React, {Component} from "react";
-import PropTypes from "prop-types";
+
+//ACTIONS
+//import { getSeasons, getSeason } from "actions/seasonAction.js";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 
-//modules
-import SeasonSummary from "views/Season/Sections/SeasonSummary.jsx";
-
 import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashboardStyle";
-
-
 //#endregion
 
-class SeasonView extends Component {
+class SeasonDetail extends Component {
     constructor(props){
         super(props);
     }
+
     //#region LIFECYCLE
     render(){
-        const { classes } = this.props;
         return(
-            <SeasonSummary classes={classes}/>
+            <div>
+                <h1>This is the Season Detail Page</h1>
+            </div>
         )
     }
     //#endregion
 }
 
-SeasonView.propTypes = {
-    classes: PropTypes.object.isRequired
-}
 
-export default withStyles(dashboardStyle)(SeasonView);
+export default withStyles(dashboardStyle)(SeasonDetail);

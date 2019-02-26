@@ -26,6 +26,7 @@ class MemberSummary extends Component {
     }
   }
 
+  //#region LIFECYCLE
   componentWillReceiveProps(nextProps){
     if (nextProps.members){
       this.setState({
@@ -97,6 +98,8 @@ class MemberSummary extends Component {
             />
     );
   }
+
+  //#endregion
 }
 
 MemberSummary.propTypes = {

@@ -49,40 +49,7 @@ class MemberDetail extends Component{
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
-
-    //#region LIFECYCLE
     
-    componentWillReceiveProps(newProps){
-        if (newProps.errors){
-            this.setState({errors: newProps.errors});
-        }
-
-        if (newProps.member !== this.props.member){
-            const editMember = newProps.member;
-
-            this.setState({
-                firstName: editMember.firstName, 
-                lastName: editMember.lastName,
-                grade: editMember.grade,
-                isEdit: true
-            })
-        }
-
-        if (newProps.alert !== this.props.alert){
-            
-            if (newProps.alert){
-                this.showNotification("tl");
-            }
-            else{
-                this.setState({
-                    tl: newProps.alert
-                })
-            }
-            
-        }
-    }
-    //#endregion
-
     //#region EVENTS
     onChange(e) {
         this.setState({ [e.target.name]: e.target.value });
@@ -117,9 +84,7 @@ class MemberDetail extends Component{
             grade: ""
         })
     }
-    //#endregion
 
-    //#region ALERTS
     showNotification(place) {
         if (!this.state[place]) {
           var x = [];
@@ -137,8 +102,40 @@ class MemberDetail extends Component{
           );
         }
       }
-    
     //#endregion
+    
+    //#region LIFECYCLE
+    
+    componentWillReceiveProps(newProps){
+        if (newProps.errors){
+            this.setState({errors: newProps.errors});
+        }
+
+        if (newProps.member !== this.props.member){
+            const editMember = newProps.member;
+
+            this.setState({
+                firstName: editMember.firstName, 
+                lastName: editMember.lastName,
+                grade: editMember.grade,
+                isEdit: true
+            })
+        }
+
+        if (newProps.alert !== this.props.alert){
+            
+            if (newProps.alert){
+                this.showNotification("tl");
+            }
+            else{
+                this.setState({
+                    tl: newProps.alert
+                })
+            }
+            
+        }
+    }
+    
     render(){
         const { classes } = this.props;
         const { errors } = this.state;
@@ -255,6 +252,7 @@ class MemberDetail extends Component{
             </Card>
         </div>
     }
+    //#endregion
 }
 
 MemberDetail.propTypes = {

@@ -38,6 +38,8 @@ class ExtendedTables extends React.Component {
     };
     this.handleToggle = this.handleToggle.bind(this);
   }
+
+  //#region EVENTS
   handleToggle(value) {
     const { checked } = this.state;
     const currentIndex = checked.indexOf(value);
@@ -53,6 +55,9 @@ class ExtendedTables extends React.Component {
       checked: newChecked
     });
   }
+  //#endregion
+
+  //#region LIFECYCLE
   render() {
     const { classes } = this.props;
     const fillButtons = [
@@ -509,6 +514,7 @@ class ExtendedTables extends React.Component {
       </GridContainer>
     );
   }
+  //#endregion
 }
 
 export default withStyles(extendedTablesStyle)(ExtendedTables);

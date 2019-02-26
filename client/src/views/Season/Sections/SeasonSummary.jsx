@@ -26,13 +26,16 @@ class SeasonView extends Component {
         super(props);
     }
 
+    //#region EVENTS
+    onClick(seasonId){
+        this.props.getSeason(seasonId);
+    }
+    //#endregion
+
+    //#region LIFECYCLE
     componentDidMount(){
         //hard coded for now
         this.props.getSeasons("5c64a1e090e2b554952869aa");
-    }
-
-    onClick(seasonId){
-        this.props.getSeason(seasonId);
     }
 
     render(){
@@ -66,6 +69,7 @@ class SeasonView extends Component {
             </GridContainer>
         )
     }
+    //#endregion
 }
 
 SeasonView.propTypes = {

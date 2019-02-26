@@ -12,8 +12,8 @@ import Assignment from "@material-ui/icons/Assignment";
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import MemberDetail from "modules/Member/MemberDetail.jsx";
-import MemberSummary from "modules/Member/MemberSummary.jsx";
+import MemberDetail from "views/Member/Sections/MemberDetail.jsx";
+import MemberSummary from "views/Member/Sections/MemberSummary.jsx";
 import Spinner from "components/Spinner/Spinner.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
@@ -32,16 +32,8 @@ class MemberView extends Component {
         this.onEditClick = this.onEditClick.bind(this);
         this.onDeleteClick = this.onDeleteClick.bind(this);
     }
-
-    //#region LIFECYCLE
-    componentDidMount(){
-        this.props.getMembers();
-      }
-      
-    //#endregion
-
+    
     //#region EVENTS
-
     onDeleteClick(id){
         this.props.deleteMember(id);
       }
@@ -51,51 +43,56 @@ class MemberView extends Component {
       }
     //#endregion
     
-
-  render() {
-    //const { classes } = this.props;
-    const {member, members, loading, alert} = this.props.model;
-    const { errors, classes } = this.props;
-    let membersContent;
-
-    if (members === null || loading){
-        membersContent = <Spinner/>
-    } else {
-        membersContent = <MemberSummary 
-                            members={members}
-                            onDeleteClick={this.onDeleteClick}
-                            onEditClick={this.onEditClick}
-                        />
+    //#region LIFECYCLE
+    componentDidMount(){
+        this.props.getMembers();
     }
 
-    
-    return (
-      <div>
-        <GridContainer>
-            <GridItem xs={12} sm={12} md={6}>
-                <MemberDetail 
-                    member={member}
-                    errors={errors}
-                    alert={alert}
-                />
-            </GridItem>
-            <GridItem xs={12} sm={12} md={6}>
-                <Card>
-                    <CardHeader color="rose" icon>
-                        <CardIcon color="rose">
-                            <Assignment />
-                        </CardIcon>
-                        <h4 className={classes.cardIconTitle}><strong>River Valley 2019 Winter</strong></h4>
-                    </CardHeader>
-                    <CardBody>
-                        {membersContent}
-                    </CardBody>
-                </Card>
-            </GridItem>
-        </GridContainer>
-      </div>
-    );
-  }
+    render() {
+        //const { classes } = this.props;
+        const {member, members, loading, alert} = this.props.model;
+        const { errors, classes } = this.props;
+        let membersContent;
+
+        if (members === null || loading){
+            membersContent = <Spinner/>
+        } else {
+            membersContent = <MemberSummary 
+                                members={members}
+                                onDeleteClick={this.onDeleteClick}
+                                onEditClick={this.onEditClick}
+                            />
+        }
+
+        
+        return (
+        <div>
+            <GridContainer>
+                <GridItem xs={12} sm={12} md={6}>
+                    <MemberDetail 
+                        member={member}
+                        errors={errors}
+                        alert={alert}
+                    />
+                </GridItem>
+                <GridItem xs={12} sm={12} md={6}>
+                    <Card>
+                        <CardHeader color="rose" icon>
+                            <CardIcon color="rose">
+                                <Assignment />
+                            </CardIcon>
+                            <h4 className={classes.cardIconTitle}><strong>River Valley 2019 Winter</strong></h4>
+                        </CardHeader>
+                        <CardBody>
+                            {membersContent}
+                        </CardBody>
+                    </Card>
+                </GridItem>
+            </GridContainer>
+        </div>
+        );
+    }
+    //#endregion
 }
 
 MemberView.propTypes = {
