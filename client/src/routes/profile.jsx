@@ -1,6 +1,7 @@
 //#region IMPORT
 import Members from "views/Member/MemberView.jsx";
 import Seasons from "views/Season/SeasonView.jsx";
+import SeasonDetail from "views/Season/Sections/SeasonDetail.jsx";
 import Buttons from "views/Components/Buttons.jsx";
 import GridSystem from "views/Components/GridSystem.jsx";
 import Panels from "views/Components/Panels.jsx";
@@ -56,7 +57,14 @@ var profileRoutes = [
         path: "/seasons",
         name: "MBI Winter Guard",
         icon: Apps,
+        exact: true,
         component: Seasons
+    },
+    {
+        path: "/seasons/:id",
+        name: "Season",
+        component: SeasonDetail,
+        invisible: true
     },
     {
         path: "/members",

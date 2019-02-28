@@ -11,16 +11,21 @@ import "assets/scss/material-dashboard-pro-react.css?v=1.4.0";
 const hist = createBrowserHistory();
 
 ReactDOM.render(
-  <Provider store={store}>
-    <Router history={hist}>
-      <Switch>
-        {indexRoutes.map((prop, key) => {
-          return (
-            <Route path={prop.path} component={prop.component} key={key} />
-          );
-        })}
-      </Switch>
-    </Router>
-  </Provider>,
-  document.getElementById("root")
+    <Provider store={store}>
+        <Router history={hist}>
+            <Switch>
+                {indexRoutes.map((prop, key) => {
+                    return (
+                        <Route
+                            path={prop.path}
+                            component={prop.component}
+                            key={key}
+                            exact={prop.exact}
+                        />
+                    );
+                })}
+            </Switch>
+        </Router>
+    </Provider>,
+    document.getElementById("root")
 );

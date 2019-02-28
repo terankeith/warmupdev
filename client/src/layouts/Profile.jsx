@@ -26,20 +26,11 @@ const switchRoutes = (
         {profileRoutes.map((prop, key) => {
             if (prop.redirect)
                 return <Redirect from={prop.path} to={prop.pathTo} key={key} />;
-            if (prop.invisible) return null;
             if (prop.collapse)
                 return prop.views.map((prop, key) => {
-                    return (
-                        <Route
-                            path={prop.path}
-                            component={prop.component}
-                            key={key}
-                        />
-                    );
+                    return <Route {...prop} key={key} />;
                 });
-            return (
-                <Route path={prop.path} component={prop.component} key={key} />
-            );
+            return <Route {...prop} key={key} />;
         })}
     </Switch>
 );

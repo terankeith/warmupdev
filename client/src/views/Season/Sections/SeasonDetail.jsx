@@ -21,16 +21,16 @@ class SeasonDetail extends Component {
     componentDidMount() {
         //getSeason();
     }
+    //#endregion
 
     render() {
+        const { match } = this.props;
         return (
-            // # Redirect here somehow
             <div>
-                <h1>This is the Season Detail Page</h1>
+                <h1>{match.params.id}</h1>
             </div>
         );
     }
-    //#endregion
 }
 
 SeasonDetail.propTypes = {

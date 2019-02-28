@@ -1,7 +1,8 @@
 //#region IMPORT
-import React, {Component} from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 //ACTIONS
 import { getSeasons, getSeason } from "actions/seasonAction.js";
@@ -13,63 +14,61 @@ import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardAvatar from "components/Card/CardAvatar.jsx";
-
-
-import mbi2019 from "assets/img/units/mbi2019.jpg";
-import mbi2018 from "assets/img/units/mbi2018.jpg";
-import mbi2017 from "assets/img/units/mbi2017.jpg";
-
 //#endregion
 
 class SeasonView extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
     }
 
     //#region EVENTS
-    onClick(seasonId){
+    onClick(seasonId) {
         this.props.getSeason(seasonId);
     }
     //#endregion
 
     //#region LIFECYCLE
-    componentDidMount(){
+    componentDidMount() {
         //hard coded for now
         this.props.getSeasons("5c64a1e090e2b554952869aa");
     }
+    //#endregion
 
-    render(){
+    render() {
         const { classes } = this.props;
         const { seasons } = this.props.model;
 
-        const seasonList = seasons.map(season =>{
-            return(
+        const seasonList = seasons.map(season => {
+            return (
                 <GridItem xs={12} sm={12} md={6} lg={4} key={season._id}>
                     <Card profile onClick={this.onClick.bind(this, season._id)}>
                         <CardAvatar profile>
-                            <a href="#pablo" onClick={e => e.preventDefault()}>
-                                <img src={require(`assets/img/units/${season.icon || "avatar.jpg"}`)} alt="..." />
-                            </a>
+                            <Link to={`seasons/${season._id}`}>
+                                <img
+                                    src={require(`assets/img/units/${season.icon ||
+                                        "avatar.jpg"}`)}
+                                    alt="..."
+                                />
+                            </Link>
                         </CardAvatar>
                         <CardBody profile>
-                            <h6 className={classes.cardCategory}>{season.year + " | " + season.season}</h6>
-                            <h4 className={classes.cardTitle}>{season.showTitle}</h4>
-                            
+                            <h6 className={classes.cardCategory}>
+                                {season.year + " | " + season.season}
+                            </h6>
+                            <h4 className={classes.cardTitle}>
+                                {season.showTitle}
+                            </h4>
+
                             <Button color="info" round>
                                 <strong>{season.membership.length}</strong>
                             </Button>
                         </CardBody>
                     </Card>
                 </GridItem>
-            )
-        })
-        return(
-            <GridContainer>
-                {seasonList}
-            </GridContainer>
-        )
+            );
+        });
+        return <GridContainer>{seasonList}</GridContainer>;
     }
-    //#endregion
 }
 
 SeasonView.propTypes = {
@@ -78,11 +77,14 @@ SeasonView.propTypes = {
     classes: PropTypes.object.isRequired,
     model: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
-}
+};
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     model: state.seasonModel,
     errors: state.errors
-})
+});
 
-export default connect(mapStateToProps, {getSeasons, getSeason})(SeasonView);
+export default connect(
+    mapStateToProps,
+    { getSeasons, getSeason }
+)(SeasonView);
