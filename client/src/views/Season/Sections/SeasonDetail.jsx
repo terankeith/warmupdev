@@ -1,8 +1,10 @@
 //#region IMPORT
-import React, {Component} from "react";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 //ACTIONS
-//import { getSeasons, getSeason } from "actions/seasonAction.js";
+import { getSeason } from "actions/seasonAction.js";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -11,20 +13,36 @@ import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashbo
 //#endregion
 
 class SeasonDetail extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
     }
 
     //#region LIFECYCLE
-    render(){
-        return(
+    componentDidMount() {
+        //getSeason();
+    }
+
+    render() {
+        return (
+            // # Redirect here somehow
             <div>
                 <h1>This is the Season Detail Page</h1>
             </div>
-        )
+        );
     }
     //#endregion
 }
 
+SeasonDetail.propTypes = {
+    getSeason: PropTypes.func.isRequired,
+    season: PropTypes.object.isRequired
+};
 
-export default withStyles(dashboardStyle)(SeasonDetail);
+const mapStateToProps = state => ({
+    model: state.seasonModel
+});
+
+export default connect(
+    mapStateToProps,
+    { getSeason }
+)(withStyles(dashboardStyle)(SeasonDetail));
