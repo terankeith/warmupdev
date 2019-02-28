@@ -18,94 +18,108 @@ import extendedTablesStyle from "assets/jss/material-dashboard-pro-react/views/e
 //#endregion
 
 class MemberSummary extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      members: []
-    };
-  }
-
-  //#region LIFECYCLE
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.members) {
-      this.setState({
-        members: nextProps.members
-      });
+    constructor(props) {
+        super(props);
+        this.state = {
+            members: []
+        };
     }
-  }
-  render() {
-    const { classes } = this.props;
-    const { members } = this.props;
 
-    const fillButtons = memberID =>
-      [
-        { color: "info", icon: Person },
-        { color: "success", icon: Edit },
-        { color: "danger", icon: Close }
-      ].map((prop, key) => {
-        switch (prop.color) {
-          case "info":
-            return (
-              <Button
-                color={prop.color}
-                className={classes.actionButton}
-                key={key}
-              >
-                <prop.icon className={classes.icon} />
-              </Button>
-            );
-          case "success":
-            return (
-              <Button
-                color={prop.color}
-                className={classes.actionButton}
-                key={key}
-                onClick={this.props.onEditClick.bind(this, memberID)}
-              >
-                <prop.icon className={classes.icon} />
-              </Button>
-            );
-          case "danger":
-            return (
-              <Button
-                color={prop.color}
-                className={classes.actionButton}
-                key={key}
-                onClick={this.props.onDeleteClick.bind(this, memberID)}
-              >
-                <prop.icon className={classes.icon} />
-              </Button>
-            );
-          default:
-            return "No Button";
+    //#region LIFECYCLE
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.members) {
+            this.setState({
+                members: nextProps.members
+            });
         }
-      });
+    }
+    //#endregion
 
-    return (
-      <Table
-        tableHead={["Name", "Grade", "Actions"]}
-        tableData={members.map(member => {
-          return [
-            member.firstName + " " + member.lastName,
-            member.grade,
-            fillButtons(member._id)
-          ];
-        })}
-        customCellClasses={[classes.center, classes.right, classes.right]}
-        customClassesForCells={[0, 4, 5]}
-        customHeadCellClasses={[classes.center, classes.right, classes.right]}
-        customHeadClassesForCells={[0, 4, 5]}
-      />
-    );
-  }
+    render() {
+        const { classes } = this.props;
+        const { members } = this.props;
 
-  //#endregion
+        const fillButtons = memberID =>
+            [
+                { color: "info", icon: Person },
+                { color: "success", icon: Edit },
+                { color: "danger", icon: Close }
+            ].map((prop, key) => {
+                switch (prop.color) {
+                    case "info":
+                        return (
+                            <Button
+                                color={prop.color}
+                                className={classes.actionButton}
+                                key={key}
+                            >
+                                <prop.icon className={classes.icon} />
+                            </Button>
+                        );
+                    case "success":
+                        return (
+                            <Button
+                                color={prop.color}
+                                className={classes.actionButton}
+                                key={key}
+                                onClick={this.props.onEditClick.bind(
+                                    this,
+                                    memberID
+                                )}
+                            >
+                                <prop.icon className={classes.icon} />
+                            </Button>
+                        );
+                    case "danger":
+                        return (
+                            <Button
+                                color={prop.color}
+                                className={classes.actionButton}
+                                key={key}
+                                onClick={this.props.onDeleteClick.bind(
+                                    this,
+                                    memberID
+                                )}
+                            >
+                                <prop.icon className={classes.icon} />
+                            </Button>
+                        );
+                    default:
+                        return "No Button";
+                }
+            });
+
+        return (
+            <Table
+                tableHead={["Name", "Grade", "Actions"]}
+                tableData={members.map(member => {
+                    return [
+                        member.firstName + " " + member.lastName,
+                        member.grade,
+                        fillButtons(member._id)
+                    ];
+                })}
+                customCellClasses={[
+                    classes.center,
+                    classes.right,
+                    classes.right
+                ]}
+                customClassesForCells={[0, 4, 5]}
+                customHeadCellClasses={[
+                    classes.center,
+                    classes.right,
+                    classes.right
+                ]}
+                customHeadClassesForCells={[0, 4, 5]}
+            />
+        );
+    }
 }
 
 MemberSummary.propTypes = {
-  members: PropTypes.array.isRequired,
-  onDeleteClick: PropTypes.func.isRequired,
-  onEditClick: PropTypes.func.isRequired
+    members: PropTypes.array.isRequired,
+    onDeleteClick: PropTypes.func.isRequired,
+    onEditClick: PropTypes.func.isRequired
 };
 
 export default withStyles(extendedTablesStyle)(MemberSummary);

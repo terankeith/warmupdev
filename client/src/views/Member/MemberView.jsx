@@ -1,3 +1,4 @@
+// #region IMPORT
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -21,6 +22,7 @@ import CardIcon from "components/Card/CardIcon.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 
 import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashboardStyle";
+// #endregion
 
 class MemberView extends Component {
     constructor(props) {
@@ -46,6 +48,7 @@ class MemberView extends Component {
     componentDidMount() {
         this.props.getMembers();
     }
+    //#endregion
 
     render() {
         //const { classes } = this.props;
@@ -92,7 +95,6 @@ class MemberView extends Component {
             </div>
         );
     }
-    //#endregion
 }
 
 MemberView.propTypes = {

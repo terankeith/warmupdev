@@ -76,7 +76,7 @@ class MemberDetail extends Component {
     };
     //#endregion
 
-    //#region HELPERS
+    //#region METHODS
     resetForm() {
         this.setState({
             firstName: "",
@@ -132,6 +132,7 @@ class MemberDetail extends Component {
             }
         }
     }
+    //#endregion
 
     render() {
         const { classes } = this.props;
@@ -282,7 +283,6 @@ class MemberDetail extends Component {
             </div>
         );
     }
-    //#endregion
 }
 
 MemberDetail.propTypes = {

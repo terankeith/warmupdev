@@ -1,3 +1,4 @@
+//#region IMPORT
 import React from "react";
 import cx from "classnames";
 import PropTypes from "prop-types";
@@ -14,16 +15,17 @@ import Header from "components/Header/Header.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 
-import profileRoutes from "routes/profile.jsx";
+import dashboardRoutes from "routes/dashboard.jsx";
 
 import appStyle from "assets/jss/material-dashboard-pro-react/layouts/dashboardStyle.jsx";
 
 import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/logo-white.svg";
+//#endregion
 
 const switchRoutes = (
     <Switch>
-        {profileRoutes.map((prop, key) => {
+        {dashboardRoutes.map((prop, key) => {
             if (prop.redirect)
                 return <Redirect from={prop.path} to={prop.pathTo} key={key} />;
             if (prop.collapse)
@@ -37,7 +39,7 @@ const switchRoutes = (
 
 var ps;
 
-class Profile extends React.Component {
+class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -104,8 +106,8 @@ class Profile extends React.Component {
         return (
             <div className={classes.wrapper}>
                 <Sidebar
-                    routes={profileRoutes}
-                    logoText={"Creative Tim"}
+                    routes={dashboardRoutes}
+                    logoText={"WarmUp"}
                     logo={logo}
                     image={image}
                     handleDrawerToggle={this.handleDrawerToggle}
@@ -119,7 +121,7 @@ class Profile extends React.Component {
                     <Header
                         sidebarMinimize={this.sidebarMinimize.bind(this)}
                         miniActive={this.state.miniActive}
-                        routes={profileRoutes}
+                        routes={dashboardRoutes}
                         handleDrawerToggle={this.handleDrawerToggle}
                         {...rest}
                     />
@@ -140,8 +142,8 @@ class Profile extends React.Component {
     }
 }
 
-Profile.propTypes = {
+Dashboard.propTypes = {
     classes: PropTypes.object.isRequired
 };
 
-export default withStyles(appStyle)(Profile);
+export default withStyles(appStyle)(Dashboard);
