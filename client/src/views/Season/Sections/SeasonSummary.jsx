@@ -21,12 +21,6 @@ class SeasonView extends Component {
         super(props);
     }
 
-    //#region EVENTS
-    onClick(seasonId) {
-        this.props.getSeason(seasonId);
-    }
-    //#endregion
-
     //#region LIFECYCLE
     componentDidMount() {
         //hard coded for now
@@ -41,7 +35,7 @@ class SeasonView extends Component {
         const seasonList = seasons.map(season => {
             return (
                 <GridItem xs={12} sm={12} md={6} lg={4} key={season._id}>
-                    <Card profile onClick={this.onClick.bind(this, season._id)}>
+                    <Card profile>
                         <CardAvatar profile>
                             <Link to={`seasons/${season._id}`}>
                                 <img

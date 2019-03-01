@@ -62,10 +62,10 @@ class MemberSummary extends Component {
                                 color={prop.color}
                                 className={classes.actionButton}
                                 key={key}
-                                onClick={this.props.onEditClick.bind(
-                                    this,
-                                    memberID
-                                )}
+                                // onClick={this.props.onEditClick.bind(
+                                //     this,
+                                //     memberID
+                                // )}
                             >
                                 <prop.icon className={classes.icon} />
                             </Button>
@@ -118,8 +118,8 @@ class MemberSummary extends Component {
 
 MemberSummary.propTypes = {
     members: PropTypes.array.isRequired,
-    onDeleteClick: PropTypes.func.isRequired,
-    onEditClick: PropTypes.func.isRequired
+    onDeleteClick: PropTypes.func,
+    onEditClick: PropTypes.func
 };
 
 export default withStyles(extendedTablesStyle)(MemberSummary);

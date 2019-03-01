@@ -5,6 +5,7 @@ export const ADD_MEMBER = "ADD_MEMBER";
 export const UPDATED_MEMBER = "UPDATED_MEMBER";
 export const DELETE_MEMBER = "DELETE_MEMBER";
 export const LOADING_MEMBERS = "LOADING_MEMBERS";
+export const SET_LOADING_FALSE = "SET_LOADING_FALSE";
 
 //SEASONS
 export const GET_SEASON = "GET_SEASON";

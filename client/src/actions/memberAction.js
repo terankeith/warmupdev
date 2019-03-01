@@ -7,7 +7,8 @@ import {
     GET_MEMBER,
     UPDATED_MEMBER,
     LOADING_MEMBERS,
-    ALERT_CLOSE
+    ALERT_CLOSE,
+    SET_LOADING_FALSE
 } from "./actions";
 //an action is a method that interacts with the db
 export const saveMember = (memberData, history, isNew) => dispatch => {
@@ -52,7 +53,7 @@ export const getMember = id => dispatch => {
 };
 
 export const getMembers = () => dispatch => {
-    dispatch(setMembersLoading());
+    dispatch(setMembersLoading(true));
     axios
         .get("/api/members")
         .then(res =>
@@ -67,6 +68,10 @@ export const getMembers = () => dispatch => {
                 payload: null
             })
         );
+
+    setTimeout(() => {
+        dispatch(setMembersLoading(false));
+    }, 1000);
 };
 
 export const deleteMember = id => dispatch => {
@@ -86,9 +91,14 @@ export const deleteMember = id => dispatch => {
         );
 };
 
-export const setMembersLoading = () => {
+export const setMembersLoading = loading => {
+    if (loading) {
+        return {
+            type: LOADING_MEMBERS
+        };
+    }
     return {
-        type: LOADING_MEMBERS
+        type: SET_LOADING_FALSE
     };
 };
 
