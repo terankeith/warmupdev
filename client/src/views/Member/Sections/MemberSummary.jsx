@@ -36,8 +36,7 @@ class MemberSummary extends Component {
     //#endregion
 
     render() {
-        const { classes } = this.props;
-        const { members } = this.props;
+        const { classes, members } = this.props;
 
         const fillButtons = memberID =>
             [

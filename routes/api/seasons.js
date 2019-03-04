@@ -40,6 +40,7 @@ router.post("/units/:id", (req, res) => {
 //#endregion
 
 //#region POST api/seasons/members/:id/:member_id
+//@desc Adds member to season
 router.post("/members/:id/:member_id", (req, res) => {
     Season.findById(req.params.id)
         .then(season => {
@@ -94,7 +95,7 @@ router.delete("/:id/:membership_id", (req, res) => {
 
             // Splice out of array
             season.membership.splice(removeIndex, 1);
-            season.save().then(season => res.json(season));
+            season.save().then(() => res.json({ success: true }));
         })
         .catch(err => res.status(404).json(err));
 });

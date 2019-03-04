@@ -1,5 +1,10 @@
 import axios from "axios";
-import { GET_SEASONS, GET_ERRORS, GET_SEASON } from "./actions";
+import {
+    GET_SEASONS,
+    GET_ERRORS,
+    GET_SEASON,
+    SEASON_REMOVE_MEMBER
+} from "./actions";
 //an action is a method that interacts with the db
 
 export const getSeasons = unitId => dispatch => {
@@ -35,3 +40,22 @@ export const getSeason = seasonId => dispatch => {
             })
         );
 };
+
+export const removeMemberFromSeason = (seasonId, memberId) => dispatch => {
+    axios
+        .delete(`/api/seasons/${seasonId}/${memberId}`)
+        .then(res =>
+            dispatch({
+                type: SEASON_REMOVE_MEMBER,
+                payload: memberId
+            })
+        )
+        .catch(err =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        );
+};
+
+export const addMemberToSeason = (seasonId, memberId) => dispatch => {};

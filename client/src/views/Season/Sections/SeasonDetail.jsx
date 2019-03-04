@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 //ACTIONS
-import { getSeason } from "actions/seasonAction.js";
+import { getSeason, removeMemberFromSeason } from "actions/seasonAction.js";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -12,15 +12,18 @@ import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashbo
 
 //ICONS
 import Assignment from "@material-ui/icons/Assignment";
+import Edit from "@material-ui/icons/Edit";
 
 //CORE COMPONENTS
-import MemberSummary from "views/Member/Sections/MemberSummary.jsx";
-import GridContainer from "components/Grid/GridContainer.jsx";
-import GridItem from "components/Grid/GridItem.jsx";
+import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
-import CardIcon from "components/Card/CardIcon.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
+import CardIcon from "components/Card/CardIcon.jsx";
+import GridContainer from "components/Grid/GridContainer.jsx";
+import GridItem from "components/Grid/GridItem.jsx";
+import MemberSummary from "views/Member/Sections/MemberSummary.jsx";
+import { isObject } from "util";
 //#endregion
 
 class SeasonDetail extends Component {
@@ -31,15 +34,14 @@ class SeasonDetail extends Component {
     }
 
     // #region EVENTS
-    onDeleteClick(e) {
-        e.preventDefault();
+    onDeleteClick(memberId) {
+        this.props.removeMemberFromSeason(this.props.match.params.id, memberId);
     }
     // #endregion
 
     //#region LIFECYCLE
     componentDidMount() {
-        const { match } = this.props;
-        this.props.getSeason(match.params.id);
+        this.props.getSeason(this.props.match.params.id);
     }
     //#endregion
 
@@ -51,7 +53,7 @@ class SeasonDetail extends Component {
         let members;
         let membersContent;
 
-        if (membership === null || typeof membership === "undefined") {
+        if (membership === null || !isObject(membership)) {
             membersContent = "No members";
         } else {
             members = membership.map((member, i) => {
@@ -77,6 +79,13 @@ class SeasonDetail extends Component {
                         <h4 className={classes.cardIconTitle}>
                             <strong>Member Roster</strong>
                         </h4>
+                        <Button
+                            color="success"
+                            className={classes.actionButton}
+                            justIcon
+                        >
+                            <Edit className={classes.icon} />
+                        </Button>
                     </CardHeader>
                     <CardBody>{membersContent}</CardBody>
                 </Card>
@@ -87,6 +96,7 @@ class SeasonDetail extends Component {
 
 SeasonDetail.propTypes = {
     getSeason: PropTypes.func.isRequired,
+    removeMemberFromSeason: PropTypes.func.isRequired,
     model: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired
 };
@@ -97,5 +107,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    { getSeason }
+    { getSeason, removeMemberFromSeason }
 )(withStyles(dashboardStyle)(SeasonDetail));
