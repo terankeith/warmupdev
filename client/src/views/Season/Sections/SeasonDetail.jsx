@@ -8,11 +8,11 @@ import { getSeason, removeMemberFromSeason } from "actions/seasonAction.js";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashboardStyle";
+//import dashboardStyle from "assets/jss/material-dashboard-pro-react/views/dashboardStyle";
+import extendedTablesStyle from "assets/jss/material-dashboard-pro-react/views/extendedTablesStyle.jsx";
 
 //ICONS
 import Assignment from "@material-ui/icons/Assignment";
-import Edit from "@material-ui/icons/Edit";
 
 //CORE COMPONENTS
 import Button from "components/CustomButtons/Button.jsx";
@@ -23,12 +23,16 @@ import CardIcon from "components/Card/CardIcon.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import MemberSummary from "views/Member/Sections/MemberSummary.jsx";
+import MemberAddModal from "views/Member/Sections/MemberAddModal.jsx";
 import { isObject } from "util";
 //#endregion
 
 class SeasonDetail extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            alert: null
+        };
 
         this.onDeleteClick = this.onDeleteClick.bind(this);
     }
@@ -71,24 +75,20 @@ class SeasonDetail extends Component {
                 <GridItem xs={12}>
                     <h1>{season.showTitle}</h1>
                 </GridItem>
-                <Card>
-                    <CardHeader color="rose" icon>
-                        <CardIcon color="rose">
-                            <Assignment />
-                        </CardIcon>
-                        <h4 className={classes.cardIconTitle}>
-                            <strong>Member Roster</strong>
-                        </h4>
-                        <Button
-                            color="success"
-                            className={classes.actionButton}
-                            justIcon
-                        >
-                            <Edit className={classes.icon} />
-                        </Button>
-                    </CardHeader>
-                    <CardBody>{membersContent}</CardBody>
-                </Card>
+                <GridItem xs={12} lg={8}>
+                    <Card>
+                        <CardHeader color="rose" icon>
+                            <CardIcon color="rose">
+                                <Assignment />
+                            </CardIcon>
+                            <h4 className={classes.cardIconTitle}>
+                                <strong>Member Roster</strong>
+                                <MemberAddModal />
+                            </h4>
+                        </CardHeader>
+                        <CardBody>{membersContent}</CardBody>
+                    </Card>
+                </GridItem>
             </GridContainer>
         );
     }
@@ -108,4 +108,4 @@ const mapStateToProps = state => ({
 export default connect(
     mapStateToProps,
     { getSeason, removeMemberFromSeason }
-)(withStyles(dashboardStyle)(SeasonDetail));
+)(withStyles(extendedTablesStyle)(SeasonDetail));

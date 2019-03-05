@@ -7,7 +7,8 @@ import {
 
 const initialState = {
     seasons: [],
-    season: {}
+    season: {},
+    members: {}
 };
 
 export default function(state = initialState, action) {
@@ -25,14 +26,9 @@ export default function(state = initialState, action) {
         case SEASON_REMOVE_MEMBER:
             return {
                 ...state,
-                season: {
-                    ...state.season,
-                    membership: {
-                        ...state.season.membership.filter(
-                            member => member.member._id !== action.payload
-                        )
-                    }
-                }
+                members: state.season.membership.filter(
+                    member => member.member._id !== action.payload
+                )
             };
         case SEASON_ADD_MEMBER:
             return {
