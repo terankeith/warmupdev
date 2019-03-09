@@ -2,13 +2,16 @@ import {
     GET_SEASONS,
     GET_SEASON,
     SEASON_REMOVE_MEMBER,
-    SEASON_ADD_MEMBER
+    SEASON_ADD_MEMBER,
+    LOADING_SEASON,
+    SET_LOADING_FALSE
 } from "../actions/actions";
 
 const initialState = {
     seasons: [],
     season: {},
-    members: {}
+    members: {},
+    loading: false
 };
 
 export default function(state = initialState, action) {
@@ -33,6 +36,16 @@ export default function(state = initialState, action) {
         case SEASON_ADD_MEMBER:
             return {
                 ...state
+            };
+        case LOADING_SEASON:
+            return {
+                ...state,
+                loading: true
+            };
+        case SET_LOADING_FALSE:
+            return {
+                ...state,
+                loading: false
             };
         default:
             return state;

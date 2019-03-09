@@ -3,7 +3,9 @@ import {
     GET_SEASONS,
     GET_ERRORS,
     GET_SEASON,
-    SEASON_REMOVE_MEMBER
+    SEASON_REMOVE_MEMBER,
+    LOADING_SEASON,
+    SET_LOADING_FALSE
 } from "./actions";
 //an action is a method that interacts with the db
 
@@ -25,6 +27,7 @@ export const getSeasons = unitId => dispatch => {
 };
 
 export const getSeason = seasonId => dispatch => {
+    dispatch(setSeasonLoading(true));
     axios
         .get(`/api/seasons/${seasonId}`)
         .then(res =>
@@ -39,6 +42,10 @@ export const getSeason = seasonId => dispatch => {
                 payload: null
             })
         );
+
+    setTimeout(() => {
+        dispatch(setSeasonLoading(false));
+    }, 1000);
 };
 
 export const removeMemberFromSeason = (seasonId, memberId) => dispatch => {
@@ -56,6 +63,17 @@ export const removeMemberFromSeason = (seasonId, memberId) => dispatch => {
                 payload: err.response.data
             })
         );
+};
+
+export const setSeasonLoading = loading => {
+    if (loading) {
+        return {
+            type: LOADING_SEASON
+        };
+    }
+    return {
+        type: SET_LOADING_FALSE
+    };
 };
 
 export const addMemberToSeason = (seasonId, memberId) => dispatch => {};

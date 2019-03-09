@@ -24,6 +24,7 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import MemberSummary from "views/Member/Sections/MemberSummary.jsx";
 import MemberAddModal from "views/Member/Sections/MemberAddModal.jsx";
+import Spinner from "components/Spinner/Spinner.jsx";
 import { isObject } from "util";
 //#endregion
 
@@ -50,15 +51,15 @@ class SeasonDetail extends Component {
     //#endregion
 
     render() {
-        const { season } = this.props.model;
+        const { season, loading } = this.props.model;
         const { classes } = this.props;
         const { membership } = season;
 
         let members;
         let membersContent;
 
-        if (membership === null || !isObject(membership)) {
-            membersContent = "No members";
+        if (membership === null || !isObject(membership) || loading) {
+            membersContent = <Spinner />;
         } else {
             members = membership.map((member, i) => {
                 return member.member;
