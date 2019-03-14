@@ -2,6 +2,7 @@
 import Members from "views/Member/MemberView.jsx";
 import Seasons from "views/Season/SeasonView.jsx";
 import SeasonDetail from "views/Season/Sections/SeasonDetail.jsx";
+import Challenges from "views/Challenges/ChallengeView.jsx";
 
 // @material-ui/icons
 import DashboardIcon from "@material-ui/icons/Dashboard";
@@ -27,6 +28,12 @@ var dashboardRoutes = [
         name: "Members",
         icon: DashboardIcon,
         component: Members
+    },
+    {
+        path: "/challenges",
+        name: "Challenges",
+        icon: DashboardIcon,
+        component: Challenges
     },
     { redirect: true, path: "/", pathTo: "/seasons", name: "Seasons" }
 ];
